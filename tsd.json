@@ -1,0 +1,18 @@
+{
+  "version": "v4",
+  "repo": "kalahari/DefinitelyTyped",
+  "ref": "master",
+  "path": "typings",
+  "bundle": "typings/tsd.d.ts",
+  "installed": {
+    "github-electron/github-electron.d.ts": {
+      "commit": "30a34fc1f4e7402367650ab6663154ea02a8d77b"
+    },
+    "node/node.d.ts": {
+      "commit": "30a34fc1f4e7402367650ab6663154ea02a8d77b"
+    },
+    "mongodb/mongodb.d.ts": {
+      "commit": "30a34fc1f4e7402367650ab6663154ea02a8d77b"
+    }
+  }
+}
