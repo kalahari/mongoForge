@@ -13,6 +13,9 @@
     },
     "mongodb/mongodb.d.ts": {
       "commit": "30a34fc1f4e7402367650ab6663154ea02a8d77b"
+    },
+    "vue/vue.d.ts": {
+      "commit": "30a34fc1f4e7402367650ab6663154ea02a8d77b"
     }
   }
 }

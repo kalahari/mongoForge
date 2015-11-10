@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/kalahari/mongoForge#readme",
   "dependencies": {
-    "mongodb": "^2.0.48"
+    "mongodb": "^2.0.48",
+    "vue": "^1.0.7"
   }
 }

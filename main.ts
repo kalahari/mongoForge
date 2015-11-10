@@ -3,6 +3,8 @@
 
 import app = require('app');  // Module to control application life.
 import BrowserWindow = require('browser-window');  // Module to create native browser window.
+import Menu = require('menu');
+import MenuItem = require('menu-item');
 
 // entry point
 function main() {
@@ -48,6 +50,23 @@ function main() {
       // when you should delete the corresponding element.
       mainWindow = null;
     });
+
+    // Build our new menu
+    var menu = new Menu()
+    menu.append(new MenuItem({
+      label: 'Delete',
+      click: function() {
+        // Trigger an alert when menu item is clicked
+        alert('Deleted')
+      }
+    }))
+    menu.append(new MenuItem({
+      label: 'More Info...',
+      click: function() {
+        // Trigger an alert when menu item is clicked
+        alert('Here is more information')
+      }
+    }))
   });
 }
 
