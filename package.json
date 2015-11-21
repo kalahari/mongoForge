@@ -2,7 +2,7 @@
   "name": "mongo-forge",
   "version": "0.1.0",
   "description": "MongoDB Admin Client GUI",
-  "main": "built/main.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,8 +11,10 @@
     "url": "git+https://github.com/kalahari/mongoForge.git"
   },
   "keywords": [
-    "MongoDB",
-    "electron"
+    "mongodb",
+    "electron",
+    "angular2",
+    "typescript"
   ],
   "author": "Blake Mitchell <blake@barkingspoon.com>",
   "license": "Apache-2.0",
@@ -21,7 +23,9 @@
   },
   "homepage": "https://github.com/kalahari/mongoForge#readme",
   "dependencies": {
+    "angular2": "^2.0.0-alpha.46",
+    "es6-shim": "^0.33.13",
     "mongodb": "^2.0.48",
-    "vue": "^1.0.7"
+    "reflect-metadata": "^0.1.2"
   }
 }

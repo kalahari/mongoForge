@@ -1,20 +1,21 @@
 'use strict';
 /// <reference path="typings/tsd.d.ts" />
 
-import app = require('app');  // Module to control application life.
-import BrowserWindow = require('browser-window');  // Module to create native browser window.
-import Menu = require('menu');
-import MenuItem = require('menu-item');
-import dialog = require('dialog');
-//import ipc = require('ipc');
+import {app, BrowserWindow} from 'electron';
+
+// import Menu = require('menu');
+// import MenuItem = require('menu-item');
+// import dialog = require('dialog');
+// import ipc = require('ipc');
+
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+var mainWindow: BrowserWindow = null;
 
 // entry point
 function main() {
   // Report crashes to our server.
   require('crash-reporter').start();
-  // Keep a global reference of the window object, if you don't, the window will
-  // be closed automatically when the JavaScript object is garbage collected.
-  var mainWindow: BrowserWindow = null;
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
@@ -40,7 +41,7 @@ function main() {
     });
 
     // and load the index.html of the app.
-    mainWindow.loadUrl('file://' + __dirname + '/../window.html');
+    mainWindow.loadUrl('file://' + __dirname + '/window.html');
 
     // Open the DevTools.
     //mainWindow.openDevTools();
@@ -53,34 +54,34 @@ function main() {
       mainWindow = null;
     });
 
-    // Build our new menu
-    var menu = new Menu();
-    menu.append(new MenuItem({
-      label: 'Delete',
-      click: () => {
-        // Trigger an alert when menu item is clicked
-        dialog.showMessageBox(mainWindow, {
-          type: 'info',
-          title: 'Deleted',
-          message: 'Deleted',
-          buttons: ['OK'],
-        });
-        //alert('Deleted')
-      }
-    }));
-    menu.append(new MenuItem({
-      label: 'More Info...',
-      click: () => {
-        // Trigger an alert when menu item is clicked
-        dialog.showMessageBox(mainWindow, {
-          type: 'info',
-          title: 'More Info',
-          message: 'Here is more information',
-          buttons: ['OK'],
-        });
-        //alert('Here is more information')
-      }
-    }));
+    // // Build our new menu
+    // var menu = new Menu();
+    // menu.append(new MenuItem({
+    //   label: 'Delete',
+    //   click: () => {
+    //     // Trigger an alert when menu item is clicked
+    //     dialog.showMessageBox(mainWindow, {
+    //       type: 'info',
+    //       title: 'Deleted',
+    //       message: 'Deleted',
+    //       buttons: ['OK'],
+    //     });
+    //     //alert('Deleted')
+    //   }
+    // }));
+    // menu.append(new MenuItem({
+    //   label: 'More Info...',
+    //   click: () => {
+    //     // Trigger an alert when menu item is clicked
+    //     dialog.showMessageBox(mainWindow, {
+    //       type: 'info',
+    //       title: 'More Info',
+    //       message: 'Here is more information',
+    //       buttons: ['OK'],
+    //     });
+    //     //alert('Here is more information')
+    //   }
+    // }));
     
     
   });

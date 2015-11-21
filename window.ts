@@ -1,32 +1,9 @@
 'use strict';
 /// <reference path="typings/tsd.d.ts" />
 
-import vue = require('vue');
+import 'es6-shim';
+import 'reflect-metadata';
+import {bootstrap} from 'angular2/angular2';
+import {Window} from './components/window';
 
-var remote = require('remote')
-var Menu = remote.require('menu')
-var MenuItem = remote.require('menu-item')
-
-// Build our new menu
-var menu = new Menu()
-menu.append(new MenuItem({
-  label: 'Delete',
-  click: function() {
-    // Trigger an alert when menu item is clicked
-    alert('Deleted')
-  }
-}))
-menu.append(new MenuItem({
-  label: 'More Info...',
-  click: function() {
-    // Trigger an alert when menu item is clicked
-    alert('Here is more information')
-  }
-}))
-
-// Add the listener
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelector('.js-context-menu').addEventListener('click', function (event) {
-    menu.popup(remote.getCurrentWindow());
-  })
-})
+bootstrap(window);

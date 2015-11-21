@@ -5,17 +5,17 @@
   "path": "typings",
   "bundle": "typings/tsd.d.ts",
   "installed": {
-    "github-electron/github-electron.d.ts": {
-      "commit": "30a34fc1f4e7402367650ab6663154ea02a8d77b"
-    },
     "node/node.d.ts": {
-      "commit": "30a34fc1f4e7402367650ab6663154ea02a8d77b"
+      "commit": "c07adc8c98d909d5374edd454adb6a884ce5fee3"
     },
     "mongodb/mongodb.d.ts": {
       "commit": "30a34fc1f4e7402367650ab6663154ea02a8d77b"
     },
-    "vue/vue.d.ts": {
-      "commit": "30a34fc1f4e7402367650ab6663154ea02a8d77b"
+    "github-electron/electron-prebuilt.d.ts": {
+      "commit": "c07adc8c98d909d5374edd454adb6a884ce5fee3"
+    },
+    "github-electron/github-electron.d.ts": {
+      "commit": "c07adc8c98d909d5374edd454adb6a884ce5fee3"
     }
   }
 }

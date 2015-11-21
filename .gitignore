@@ -30,4 +30,5 @@ node_modules
 typings
 
 # transpiled javascript
-built
+*.js
+*.js.map
