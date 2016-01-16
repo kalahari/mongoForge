@@ -5,8 +5,9 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/gulp",
-    "electron": "./node_modules/.bin/electron main"
+    "check": "gulp tslint",
+    "prepublish": "gulp",
+    "start": "electron main"
   },
   "repository": {
     "type": "git",
@@ -40,10 +41,13 @@
     "electron-prebuilt": "^0.36.4",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",
+    "gulp-run": "^1.6.12",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-tslint": "^4.3.0",
     "gulp-typescript": "^2.10.0",
+    "run-sequence": "^1.1.5",
     "tslint": "^3.2.1",
-    "typescript": "^1.7.5"
+    "typescript": "^1.7.5",
+    "typings": "^0.6.1"
   }
 }

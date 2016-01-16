@@ -10,6 +10,8 @@
         "moduleResolution": "node"
     },
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "typings/browser.d.ts",
+        "typings/browser"
     ]
 }

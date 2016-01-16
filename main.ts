@@ -1,5 +1,5 @@
 'use strict';
-/// <reference path="typings/tsd.d.ts" />
+/// <reference path="typings/main.d.ts" />
 
 import { app, BrowserWindow } from 'electron';
 
@@ -10,7 +10,7 @@ import { app, BrowserWindow } from 'electron';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-var mainWindow: BrowserWindow = null;
+var mainWindow: GitHubElectron.BrowserWindow = null;
 
 // entry point
 function main() {
@@ -34,14 +34,17 @@ function main() {
     mainWindow = new BrowserWindow({
       width: 600,
       height: 300,
-      'min-width': 500,
-      'min-height': 200,
-      'accept-first-mouse': true,
+      //'min-width': 500,
+      minWidth: 500,
+      //'min-height': 200,
+      minHeight: 200,
+      //'accept-first-mouse': true,
+      acceptFirstMouse: true,
       //'title-bar-style': 'hidden',
     });
 
     // and load the index.html of the app.
-    mainWindow.loadUrl('file://' + __dirname + '/window.html');
+    mainWindow.loadURL('file://' + __dirname + '/window.html');
 
     // Open the DevTools.
     //mainWindow.openDevTools();
