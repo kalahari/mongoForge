@@ -1,7 +1,7 @@
 'use strict';
 /// <reference path="typings/tsd.d.ts" />
 
-import {app, BrowserWindow} from 'electron';
+import { app, BrowserWindow } from 'electron';
 
 // import Menu = require('menu');
 // import MenuItem = require('menu-item');
@@ -15,7 +15,7 @@ var mainWindow: BrowserWindow = null;
 // entry point
 function main() {
   // Report crashes to our server.
-  require('crash-reporter').start();
+  //require('crash-reporter').start();
 
   // Quit when all windows are closed.
   app.on('window-all-closed', () => {
@@ -37,7 +37,7 @@ function main() {
       'min-width': 500,
       'min-height': 200,
       'accept-first-mouse': true,
-      'title-bar-style': 'hidden'
+      //'title-bar-style': 'hidden',
     });
 
     // and load the index.html of the app.

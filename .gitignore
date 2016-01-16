@@ -32,3 +32,6 @@ typings
 # transpiled javascript
 *.js
 *.js.map
+
+# gulp settings
+!gulpfile.js
