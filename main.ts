@@ -1,5 +1,5 @@
 'use strict';
-/// <reference path="typings/main.d.ts" />
+/// <reference path="typings.d.ts" />
 
 import { app, BrowserWindow } from 'electron';
 
@@ -32,22 +32,15 @@ function main() {
 
     // Create the browser window.
     mainWindow = new BrowserWindow({
-      width: 600,
-      height: 300,
-      //'min-width': 500,
+      width: 1500,
+      height: 1500,
       minWidth: 500,
-      //'min-height': 200,
       minHeight: 200,
-      //'accept-first-mouse': true,
       acceptFirstMouse: true,
-      //'title-bar-style': 'hidden',
     });
 
     // and load the index.html of the app.
     mainWindow.loadURL('file://' + __dirname + '/window.html');
-
-    // Open the DevTools.
-    //mainWindow.openDevTools();
 
     // Emitted when the window is closed.
     mainWindow.on('closed', () => {

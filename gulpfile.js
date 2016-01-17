@@ -24,6 +24,8 @@ gulp.task('tslint', function () {
 });
 
 gulp.task('typings', function () {
+    run("sed -e 's!^(/// <reference path=\"\\.\\./es6-shim/es6-shim.d.ts\" />)$!// ### REDUNDANT FOR ES6/ES2015 ### \\1!' -i.bak node_modules/angular2/typings/zone/zone.d.ts").exec()
+    run("sed -e 's!^(/// <reference path=\"\\.\\./typings/node/node.d.ts\" />)$!// ### REDUNDANT FOR ES6/ES2015 ### \\1!' -i.bak node_modules/angular2/manual_typings/globals-es6.d.ts").exec()
     run('typings install').exec();
 });
 

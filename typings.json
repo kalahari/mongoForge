@@ -1,9 +1,8 @@
 {
   "ambientDependencies": {
-    "node": "github:kalahari/DefinitelyTyped/node/node.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e",
     "mongodb": "github:kalahari/DefinitelyTyped/mongodb/mongodb.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e",
+    "node": "github:kalahari/DefinitelyTyped/node/node.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e",
     "electron-prebuilt": "github:kalahari/DefinitelyTyped/github-electron/electron-prebuilt.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e",
-    "github-electron": "github:kalahari/DefinitelyTyped/github-electron/github-electron.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e",
-    "angular2": "github:kalahari/DefinitelyTyped/angular2/angular2.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
+    "github-electron": "github:kalahari/DefinitelyTyped/github-electron/github-electron.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e"
   }
 }
