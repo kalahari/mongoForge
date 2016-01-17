@@ -1,0 +1,12 @@
+{
+  "version": "v4",
+  "repo": "kalahari/DefinitelyTyped",
+  "ref": "mongoForge",
+  "path": "typings",
+  "bundle": "typings/tsd.d.ts",
+  "installed": {
+    "github-electron/github-electron.d.ts": {
+      "commit": "68ea9ffd3781509c17d16c372f42d62cf806e4a5"
+    }
+  }
+}
