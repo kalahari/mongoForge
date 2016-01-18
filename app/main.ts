@@ -1,4 +1,5 @@
 import 'source-map-support/register';
+import * as util from 'util';
 import { app, BrowserWindow, ipcMain } from 'electron';
 
 var mainWindow: GitHubElectron.BrowserWindow = null;
@@ -10,8 +11,18 @@ app.on('window-all-closed', () => {
 });
 
 app.on('ready', function () {
-    ipcMain.on('console-log', (event, msg, ...args) => console.log('[Browser] ' + msg, ...args));
-    ipcMain.on('console-error', (event, msg, ...args) => console.error('[Browser] ' + msg, ...args));
+    ipcMain.on('console-log', (event, msg, ...args) => {
+        if(typeof msg !== "string") {
+            msg = util.inspect(msg);
+        }
+        console.log('[Browser] ' + msg, ...args);
+    });
+    ipcMain.on('console-error', (event, msg, ...args) => {
+        if(typeof msg !== "string") {
+            msg = util.inspect(msg);
+        }
+        console.error('[Browser ERROR] ' + msg, ...args);
+    });
     
     // Initialize the window to our specified dimensions
     mainWindow = new BrowserWindow({ width: 1200, height: 900 });

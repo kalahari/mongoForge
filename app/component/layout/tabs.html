@@ -3,4 +3,7 @@
         <a>{{tab.title}}</a>
     </li>
 </ul>
-<ng-content></ng-content>
+<div *ngFor="#tab of tabs" [hidden]="!tab.active" [ngSwitch]="tab.type" class="pane">
+    <p *ngSwitchWhen="'hello'">This useless tab will close on first connection.</p>
+    <server-connection *ngSwitchWhen="'connection'" [tab]="tab"></server-connection> 
+</div>
