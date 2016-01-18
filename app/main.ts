@@ -1,3 +1,4 @@
+import 'source-map-support/register';
 import { app, BrowserWindow, ipcMain } from 'electron';
 
 var mainWindow: GitHubElectron.BrowserWindow = null;

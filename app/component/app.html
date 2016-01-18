@@ -1,10 +1,5 @@
 <div style="container">
-    <tabs>
-        <tab tab-title="Foo">
-            Content of tab Foo
-        </tab>
-        <tab tab-title="Bar">
-            Content of tab Bar
-        </tab>
-    </tabs>
+    <top-nav [tabs]="tabs"></top-nav>
+    <tabs #tabs></tabs>
+    <pre>{{response}}</pre>
 </div>

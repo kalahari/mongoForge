@@ -1,6 +1,7 @@
 "use strict";
 /// <reference="../typings/tsd.d.ts" />
 
+import 'source-map-support/register';
 import {bootstrap} from 'angular2/platform/browser';
 import { App } from './component/app';
 import { ipcRenderer } from 'electron';
