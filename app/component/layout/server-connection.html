@@ -1,3 +1,13 @@
 <div>
-    <pre>{{response}}</pre>
+    <div>
+        <pre class="pre-scrollable">{{response}}</pre>
+    </div>
+    <div class="container-fluid">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="db.collection('test').find({}).toArray()" #cmd>
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" (click)="runCommand(cmd.value)">Run</button>
+            </span>
+        </div>
+    </div>
 </div>

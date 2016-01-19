@@ -1,3 +1,5 @@
+"use strict";
+
 import {Component, Input} from 'angular2/core';
 import {NgForm}    from 'angular2/common';
 import {Connection, ConnectionTab} from '../../data/connection';

@@ -1,3 +1,4 @@
+"use strict";
 /// <reference="../../typings/tsd.d.ts" />
 /// <reference="../../local_typings/mongodb.d.ts" />
 

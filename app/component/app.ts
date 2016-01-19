@@ -1,3 +1,5 @@
+"use strict";
+
 import * as util from 'util';
 import {Component, Input} from 'angular2/core';
 import {Tabs} from './layout/tabs';

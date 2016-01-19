@@ -1,3 +1,5 @@
+"use strict";
+
 import 'source-map-support/register';
 import * as util from 'util';
 import { app, BrowserWindow, ipcMain } from 'electron';
