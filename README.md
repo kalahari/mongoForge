@@ -1,5 +1,15 @@
 # mongoForge
-MongoDB Admin Client GUI
+MongoDB Admin Client GUI/CLI for Mac/Windows/Linux
+
+*Current release is extremely raw, you have been warned.*
+
+Commmand syntax is from the [MongoDB Node.js Driver](http://mongodb.github.io/node-mongodb-native/2.1/getting-started/quick-tour/#inserting-a-document), `db` will already be defined for you.
+
+# Run
+ * Install [Node.js](https://nodejs.org/)
+ * Clone the repo
+ * Install `npm install`
+ * Run `npm start`
 
 # License
 Copyright 2016 Blake Mitchell <blake@barkingspoon.com>
