@@ -12,7 +12,7 @@ import {Tabs} from './tabs';
 })
 
 export class TopNav {
-    uri: string;
+    uri = "mongodb://localhost";
     submitting = false;
     @Input() tabs: Tabs;
 
