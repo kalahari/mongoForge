@@ -1,13 +1,37 @@
-<div>
-    <div>
-        <pre class="pre-scrollable">{{response}}</pre>
+<div class="connection-results vfull">
+    <div>{{response}}</div>
+</div>
+<div class="input-group vcontent">
+    <div class="input-group-btn dropup">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li *ngFor="#line of history" (click)="cmd.value = line">
+                <a href="#">{{line}}</a>
+            </li>
+            <li role="separator" class="divider" hidden></li>
+        </ul>
     </div>
-    <div class="container-fluid">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="db.collection('test').find({}).toArray()" #cmd>
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button" (click)="runCommand(cmd.value)">Run</button>
-            </span>
-        </div>
-    </div>
+
+    <!-- div class="input-group-dropup">
+        <button class="btn btn-default dropdown-toggle" type="button" id="historyMenu" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="historyMenu">
+            <li *ngFor="#line of history" (click)="selectTab(tab)">
+                <a href="#">{{line}}</a>
+            </li>
+            <li role="separator" class="divider" hidden></li>
+        </ul>
+    </div -->
+    
+    <input type="text" class="form-control" placeholder="db.collection('test').find({}).toArray()" #cmd>
+    <span class="input-group-btn">
+        <button class="btn btn-default" type="button" (click)="runCommand(cmd.value)">Run</button>
+    </span>
 </div>

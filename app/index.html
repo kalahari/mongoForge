@@ -8,11 +8,15 @@
     <link rel="stylesheet" href="./index.css">
     <script src="../node_modules/source-map-support/browser-source-map-support.js"></script>
     <script src="../node_modules/angular2/bundles/angular2-polyfills.js"></script>
-    <script>require('./index');</script>
+    <script>
+        window.$ = window.jQuery = require('jquery');
+        require('bootstrap');
+        require('./index');
+    </script>
 </head>
 
-<body class="container-fluid">
-    <app>Loading...</app>
+<body class="container-fluid viewport">
+    <app class="full-height">Loading...</app>
 </body>
 
 </html>

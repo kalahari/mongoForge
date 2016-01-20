@@ -3,32 +3,42 @@
 /// <reference="../../local_typings/mongodb.d.ts" />
 
 import * as util from 'util';
+import {EventEmitter} from 'events';
 import {MongoClient} from 'mongodb';
 import {Tab} from '../component/layout/tabs';
 
-export class Connection {
+export class Connection extends EventEmitter {
     public client: MongoClient;
     public db: MongoDb.Db;
 
     constructor(public uri: string) {
+        super();
         this.client = new MongoClient();
     }
 
     public connect() {
-        console.log("connecting to: " + this.uri);
+        //console.log("connecting to: " + this.uri);
         return this.client.connect(this.uri)
             .then(db => this.db = db)
-            .then(() => this.db.command({ ping: 1 }))
-            .then(r => console.log("ping results: " + JSON.stringify(r)))
-            .then(() => this.db);
+            //.then(r => console.log("ping results: " + JSON.stringify(r)))
+            .catch(e => this.emit('rawError', e));
     }
     
     public getServerStatus() {
-        return this.db.command({ serverStatus: 1 })
+        return this.runCommand({ serverStatus: 1 });
+    }
+    
+    public ping() {
+        return this.runCommand({ ping: 1 });
+    }
+    
+    public runCommand(cmd: Object) {
+        this.emit("rawInput", cmd);
+        return this.db.command(cmd)
             .then(r => {
-                console.log("serverStatus: " + JSON.stringify(r));
+                this.emit("rawOutput", r);
                 return r;
-            })
+            });
     }
 }
 
