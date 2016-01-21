@@ -1,0 +1,19 @@
+.resize-bar {
+    position: absolute;
+    top: 0em;
+    left: 0em;
+    bottom: 0em;
+    right: 0em;
+}
+
+.resize-horizontal {
+    cursor: col-resize;
+}
+
+.resize-vertical {
+    cursor: row-resize;
+}
+
+.resize-both {
+    cursor: move;
+}

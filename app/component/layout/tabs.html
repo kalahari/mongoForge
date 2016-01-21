@@ -3,11 +3,3 @@
         <a href="#">{{tab.title}}</a>
     </li>
 </ul>
-<div *ngFor="#tab of tabs" [hidden]="!tab.active" [ngSwitch]="tab.type" class="vfull">
-    <div *ngSwitchWhen="'hello'">
-        <p>This useless tab will close on first connection.</p>
-    </div>
-    <div *ngSwitchWhen="'connection'" class="full-height">
-        <server-connection [tab]="tab" class="full-height vbox"></server-connection>
-    </div>
-</div>

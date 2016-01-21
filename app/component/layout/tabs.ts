@@ -1,12 +1,22 @@
 "use strict";
 
-import {Component} from 'angular2/core';
+import * as Debug from 'debug';
+import {EventEmitter} from 'events';
+import {Component, Output} from 'angular2/core';
 import {ServerConnection} from './server-connection';
+
+var debug = Debug('mf:component/layout/Tabs');
+var error = Debug('mf:component/layout/Tabs:error');
+
+export enum TabType {
+    hello = 1,
+    connection,
+}
 
 export interface Tab {
     active: boolean;
     title: string;
-    type: string;
+    type: TabType;
 }
 
 @Component({
@@ -19,9 +29,11 @@ export interface Tab {
 export class Tabs {
     tabs: Tab[] = [];
     helloTab: Tab;
+    @Output() tabSelected: EventEmitter;
 
     constructor() {
-        this.helloTab = { title: "Hello!", type: "hello", active: true };
+        this.helloTab = { title: "Hello!", type: TabType.hello, active: true };
+        this.tabSelected = new EventEmitter();
         this.addTab(this.helloTab);
     }
 
@@ -29,6 +41,7 @@ export class Tabs {
         this.tabs.forEach(t => {
             t.active = t === tab;
         });
+        this.tabSelected.emit("tab", tab);
     }
 
     addTab(tab: Tab) {
@@ -43,6 +56,8 @@ export class Tabs {
         }
 
         this.tabs.push(tab);
+        
+        if(tab.active) this.tabSelected.emit("tab", tab);
     }
 
     removeTab(tab: Tab) {
@@ -52,7 +67,9 @@ export class Tabs {
     removeTabAt(index: number) {
         let [removed] = this.tabs.splice(index, 1);
         if (removed && removed.active && this.tabs.length > 0) {
-            this.tabs[0].active = true;
+            let activeTab = this.tabs[0]
+            activeTab.active = true;
+            this.tabSelected.emit('tab', activeTab);
         }
     }
 }

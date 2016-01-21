@@ -34,6 +34,7 @@
   "dependencies": {
     "angular2": "2.0.0-beta.0",
     "bootstrap": "^3.3.6",
+    "debug": "^2.2.0",
     "es6-shim": "^0.33.3",
     "jquery": "^2.2.0",
     "kerberos": "0.0.17",

@@ -1,3 +1,48 @@
-.connection-results {
+.left-bar {
+    position: absolute;
+    top: 0em;
+    left: 0em;
+    bottom: 0em;
     overflow: auto;
+}
+
+.resize-left-bar {
+    position: absolute;
+    top: 0em;
+    bottom: 0em;
+    width: 5px;
+}
+
+.right-panel {
+    position: absolute;
+    top: 0em;
+    right: 0em;
+    bottom: 0em;
+}
+
+.input-pane {
+    position: absolute;
+    top: 0em;
+    left: 0em;
+    right: 0em;
+}
+
+.resize-input-pane {
+    position: absolute;
+    left: 0em;
+    right: 0em;
+    height: 5px;
+}
+
+.controls {
+    position: absolute;
+    left: 0em;
+    right: 0em;
+}
+
+.output-pane {
+    position: absolute;
+    bottom: 0em;
+    left: 0em;
+    right: 0em;
 }

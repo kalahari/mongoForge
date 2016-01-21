@@ -1,9 +1,13 @@
 "use strict";
 
+import * as Debug from 'debug';
 import * as util from 'util';
-import {Component, Input, OnInit, OnChanges} from 'angular2/core';
+import {Component, Input, OnInit, OnChanges, ViewChild, ElementRef} from 'angular2/core';
 import {Tab} from './tabs';
 import {Connection, ConnectionTab} from '../../data/connection'
+
+var debug = Debug('mf:component/layout/ServerConnection');
+var error = Debug('mf:component/layout/ServerConnection:error');
 
 @Component({
     selector: 'server-connection',
@@ -14,11 +18,32 @@ import {Connection, ConnectionTab} from '../../data/connection'
 
 export class ServerConnection implements OnInit {
     @Input() tab: ConnectionTab;
+    @ViewChild('controls') controls: ElementRef;
+
     response = "";
     uri: string;
     conn: Connection;
     output: any;
     history = ["db.collection('test').find({}).toArray()"];
+    
+    private _leftBarWidth = 50;
+    private _resizeLeftBarWidth = 5;
+    private _inputPaneHeight = 100;
+    private _resizeInputPaneHeight = 5;
+    private _controlsHeight = 20;
+
+    get leftBarWidth() {
+        return this._leftBarWidth + "px";
+    }
+    get rightPanelLeft() {
+        return (this._leftBarWidth + this._resizeLeftBarWidth) + "px";
+    }
+    get inputPaneHeight() {
+        return this._inputPaneHeight + "px";
+    }
+    get outputPaneTop() {
+        return (this._inputPaneHeight + this._resizeInputPaneHeight + this._controlsHeight) + "px";
+    }
     
     constructor() {
         console.log('ServerConnection constructor');

@@ -1,9 +1,10 @@
-<div class="full-height vbox">
-    <div class="vcontent">
-        <top-nav [tabs]="tabs"></top-nav>
-        <tabs #tabs></tabs>
-    </div>
-    <div class="vfull">
-        
-    </div>
+<div class="top-bar" #topBar>
+    <top-nav [tab]="currentTab"></top-nav>
+    <tabs (selectTab)="setCurrentTab()"></tabs>
+</div>
+<div class="work-area" [style.top]="topBarHeight">
+    <work-area [tab]="currentTab"></work-area>
+</div>
+<div class="bottom-bar">
+    <status-bar></status-bar>
 </div>

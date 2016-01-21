@@ -2,23 +2,8 @@ html, body, .viewport {
     width: 100%;
     height: 100%;
     margin: 0;
-}
-
-.vbox {
-    display: flex;
-    flex-direction: column;
-}
-
-.vcontent {
-    flex: 0 0 auto;
-}
-
-.vfull {
-    flex: 1 1 auto;
-}
-
-.full-height {
-    height: 100%;
+    padding: 0;
+    overflow: hidden;
 }
 
 .ng-valid[required] {

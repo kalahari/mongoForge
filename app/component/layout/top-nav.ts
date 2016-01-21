@@ -1,9 +1,14 @@
 "use strict";
 
-import {Component, Input} from 'angular2/core';
-import {NgForm}    from 'angular2/common';
+import * as Debug from 'debug';
+import {EventEmitter} from 'events';
+import {Component, Output} from 'angular2/core';
+import {NgForm} from 'angular2/common';
 import {Connection, ConnectionTab} from '../../data/connection';
 import {Tabs} from './tabs';
+
+var debug = Debug('mf:component/layout/TopNav');
+var error = Debug('mf:component/layout/TopNav:error');
 
 @Component({
     selector: 'top-nav',
@@ -14,14 +19,16 @@ import {Tabs} from './tabs';
 export class TopNav {
     uri = "mongodb://localhost";
     submitting = false;
-    @Input() tabs: Tabs;
+    @Output() connect: EventEmitter;
+    
+    constructor() {
+        this.connect = new EventEmitter();
+    }
 
     onSubmit() {
         this.submitting = true;
         console.log("submitting: " + this.uri);
-        let tab = new ConnectionTab();
-        tab.uri = this.uri;
-        this.tabs.addTab(tab);
+        this.connect.emit('connect', this.uri);
         this.submitting = false;
     }
 }

@@ -1,0 +1,26 @@
+.top-bar {
+    position: absolute;
+    top: 0em;
+    right: 0em;
+    left: 0em;
+    background-color: #ff0000;
+}
+
+.work-area {
+    position: absolute;
+    top: 3em;
+    bottom: 2em;
+    left: 0em;
+    right: 0em;
+    background-color: #00ff00;
+}
+
+.bottom-bar {
+    position: absolute;
+    bottom: 0em;
+    right: 0em;
+    left: 0em;
+    height: 2em;
+    overflow: hidden;
+    background-color: #0000ff;
+}

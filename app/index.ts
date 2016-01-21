@@ -19,4 +19,4 @@ if (true) { // setting
     }
 }
 
-bootstrap(App);
+bootstrap(App).catch(e => console.error(e));
