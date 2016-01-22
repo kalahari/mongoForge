@@ -1,6 +1,6 @@
 <div class="top-bar" #topBar>
-    <top-nav [tab]="currentTab"></top-nav>
-    <tabs (selectTab)="setCurrentTab()"></tabs>
+    <top-nav (connect)="connectToServer($event)"></top-nav>
+    <tabs #tabs (tabSelected)="setCurrentTab($event)"></tabs>
 </div>
 <div class="work-area" [style.top]="topBarHeight">
     <work-area [tab]="currentTab"></work-area>

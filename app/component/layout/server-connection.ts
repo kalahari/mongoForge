@@ -2,21 +2,28 @@
 
 import * as Debug from 'debug';
 import * as util from 'util';
-import {Component, Input, OnInit, OnChanges, ViewChild, ElementRef} from 'angular2/core';
+import {Component, Input, OnInit, OnChanges, ViewChild,
+    ElementRef, ViewEncapsulation, AfterViewInit} from 'angular2/core';
 import {Tab} from './tabs';
+import {ResizeBar, ResizeDelta} from './resize-bar';
 import {Connection, ConnectionTab} from '../../data/connection'
 
 var debug = Debug('mf:component/layout/ServerConnection');
 var error = Debug('mf:component/layout/ServerConnection:error');
+
+const MIN_LEFT_BAR_WIDTH = 25;
+const MIN_INPUT_HEIGHT = 40;
 
 @Component({
     selector: 'server-connection',
     //moduleId: module.id,
     templateUrl: 'component/layout/server-connection.html',
     styleUrls: ['component/layout/server-connection.css'],
+    encapsulation: ViewEncapsulation.Native,
+    directives: [ResizeBar],
 })
 
-export class ServerConnection implements OnInit {
+export class ServerConnection implements OnInit, AfterViewInit {
     @Input() tab: ConnectionTab;
     @ViewChild('controls') controls: ElementRef;
 
@@ -33,25 +40,47 @@ export class ServerConnection implements OnInit {
     private _controlsHeight = 20;
 
     get leftBarWidth() {
+        debug('leftBarWidth()');
         return this._leftBarWidth + "px";
     }
     get rightPanelLeft() {
+        debug('rightPanelLeft()');
         return (this._leftBarWidth + this._resizeLeftBarWidth) + "px";
     }
     get inputPaneHeight() {
+        debug('inputPaneHeight()');
         return this._inputPaneHeight + "px";
     }
+    get controlsTop() {
+        debug('controlsTop()');
+        return (this._inputPaneHeight + this._resizeInputPaneHeight) + "px";
+    }
     get outputPaneTop() {
+        debug('outputPaneTop()');
         return (this._inputPaneHeight + this._resizeInputPaneHeight + this._controlsHeight) + "px";
     }
     
-    constructor() {
-        console.log('ServerConnection constructor');
+    // constructor() {
+    //     debug('constructor');
+    // }
+    
+    resize() {
+        debug("resize()");
+        if(!this.controls || !this.controls.nativeElement) {
+            error("Nothig found for controls: " + util.inspect(this.controls));
+            return;
+        }
+        let newHeight = this.controls.nativeElement.clientHeight;
+        debug("resize newHeight: %s, _controlsHeight: %s",
+            newHeight, this._controlsHeight);
+        if(this._controlsHeight !== newHeight) {
+            // setImmediate prevents mutate after check exception
+            setImmediate(() => this._controlsHeight = newHeight);
+        }
     }
     
     ngOnInit() {
-        console.log('ServerConnection init');
-        console.log("Tab is: " + util.inspect(this.tab));
+        debug('ngOnInit()');
         this.uri = this.tab.uri;
         this.conn = new Connection(this.uri);
         this.conn.on('rawInput', input => this.in(input));
@@ -64,17 +93,41 @@ export class ServerConnection implements OnInit {
             .catch(e => this.err(e));
     }
     
+    ngAfterViewInit() {
+        this.resize();
+    }
+    
+    resizeLeftBar(delta: ResizeDelta) {
+        debug('resizeLeftBar(delta: %s)', delta);
+        this._leftBarWidth += delta.x;
+        if(this._leftBarWidth < MIN_LEFT_BAR_WIDTH) {
+            this._leftBarWidth = MIN_LEFT_BAR_WIDTH;
+        }
+    }
+
+    
+    resizeInput(delta: ResizeDelta) {
+        debug('resizeInput(delta: %s)', delta);
+        this._inputPaneHeight += delta.y;
+        if(this._inputPaneHeight < MIN_INPUT_HEIGHT) {
+            this._inputPaneHeight = MIN_INPUT_HEIGHT;
+        }
+    }
+    
     ngOnChange() {
+        debug('ngOnChange()');
         this.output.scrollTop = this.output.scrollHeight - this.output.clientHeight;
     }
     
     runCommand(command: string) {
+        debug('runCommand(command: %s)', command);
         //console.log("Running command: " + command);
         return this.execCommand(command, /^\s*\{/.test(command))
             .catch(e => this.err(e));
     }
     
     execCommand(command: string, isCmdObj: boolean) {
+        debug('ngOnChanges(command: %s, isCmdObj: %s)', command, isCmdObj);
         if(!isCmdObj) this.in(command);
         this.history.push(command);
         let result = null;

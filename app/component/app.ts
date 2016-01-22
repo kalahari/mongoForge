@@ -4,9 +4,11 @@ import * as Debug from 'debug';
 import * as util from 'util';
 import {Component, Input, ViewEncapsulation, ViewChild,
     ElementRef, AfterViewInit} from 'angular2/core';
-import {Tabs} from './layout/tabs';
+import {Tabs, Tab, TabType} from './layout/tabs';
 import {TopNav} from './layout/top-nav';
 import {WorkArea} from './layout/work-area';
+import {StatusBar} from './layout/status-bar';
+import {ConnectionTab} from '../data/connection';
 
 var debug = Debug('mf:component/App');
 var error = Debug('mf:component/App:error');
@@ -16,13 +18,15 @@ var error = Debug('mf:component/App:error');
     //moduleId: module.id,
     templateUrl: 'component/app.html',
     styleUrls: ['component/app.css'],
-    directives: [Tabs,TopNav],
+    directives: [Tabs,TopNav,WorkArea,StatusBar],
     encapsulation: ViewEncapsulation.Native,
 })
 
 export class App implements AfterViewInit {
     @ViewChild('topBar') topBar: ElementRef;
+    @ViewChild('tabs') tabs: Tabs;
     topBarHeight = "9em";
+    currentTab: Tab = null;
     
     // constructor() {
     //     debug("constructor()");
@@ -46,5 +50,18 @@ export class App implements AfterViewInit {
     ngAfterViewInit() {
         debug("ngAfterViewInit()");
         this.resize();
+    }
+    
+    setCurrentTab(tab: Tab) {
+        debug("setCurrentTab(tab: %s)", tab);
+        this.currentTab = tab;
+    }
+    
+    connectToServer(uri: string) {
+        debug("connectToServer(uri: %s)", uri);
+        let tab = new ConnectionTab();
+        tab.uri = uri;
+        this.tabs.addTab(tab);
+        setImmediate(() => this.resize());
     }
 }

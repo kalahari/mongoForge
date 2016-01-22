@@ -5,7 +5,7 @@
 import * as util from 'util';
 import {EventEmitter} from 'events';
 import {MongoClient} from 'mongodb';
-import {Tab} from '../component/layout/tabs';
+import {Tab, TabType} from '../component/layout/tabs';
 
 export class Connection extends EventEmitter {
     public client: MongoClient;
@@ -43,13 +43,16 @@ export class Connection extends EventEmitter {
 }
 
 export class ConnectionTab implements Tab {
+    private static nextTabId = 0;
+    
     active = true;
     uri = "";
+    id = ConnectionTab.nextTabId++;
 
     get title() {
         return this.uri;
     }
     get type() {
-        return "connection";
+        return TabType.connection;
     }
 }
