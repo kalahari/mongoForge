@@ -10,6 +10,9 @@
     },
     "debug/debug.d.ts": {
       "commit": "494c6cad4e224a86ff1535f6d8f57a179fd080a1"
+    },
+    "ace/ace.d.ts": {
+      "commit": "494c6cad4e224a86ff1535f6d8f57a179fd080a1"
     }
   }
 }

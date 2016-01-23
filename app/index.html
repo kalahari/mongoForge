@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
 
-<head>
+<head>,
     <meta charset="UTF-8">
     <title>mongoForge</title>
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <!-- link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css" -->
     <link rel="stylesheet" href="./index.css">
     <script src="../node_modules/source-map-support/browser-source-map-support.js"></script>
     <script src="../node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <!-- FIXME: load this from the component that needs it -->
+    <script src="../node_modules/ace-builds/src-noconflict/ace.js"></script>
     <script>
-        window.$ = window.jQuery = require('jquery');
-        require('bootstrap');
+        //window.$ = window.jQuery = require('jquery');
+        //require('bootstrap');
         require('./index');
     </script>
 </head>

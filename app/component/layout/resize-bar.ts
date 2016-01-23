@@ -17,13 +17,14 @@ export interface ResizeDelta {
     //moduleId: module.id,
     templateUrl: 'component/layout/resize-bar.html',
     styleUrls: ['component/layout/resize-bar.css'],
-    encapsulation: ViewEncapsulation.Native,
+    //encapsulation: ViewEncapsulation.Native,
 })
 
 export class ResizeBar {
     @Input() horizontal = false;
     @Input() vertical = false;
     @Output() delta = new EventEmitter<ResizeDelta>();
+    @Output() complete = new EventEmitter<void>();
     acting = false;
     startX: number;
     startY: number;
@@ -81,6 +82,7 @@ export class ResizeBar {
         window.removeEventListener("mousemove", this.mouseMoveListener);
         window.removeEventListener("mouseup", this.mouseUpListener);
         this.acting = false;
+        this.complete.emit(null);
     }
     
     private dispatchDelta(event: MouseEvent) {

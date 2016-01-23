@@ -2,20 +2,20 @@
     <div class="left-bar" [style.width]="leftBarWidth">
     </div>
     <div class="resize-left-bar" [style.left]="leftBarWidth">
-        <resize-bar [horizontal]="true" (delta)="resizeLeftBar($event)"></resize-bar>
+        <resize-bar [horizontal]="true" (delta)="resizeLeftBar($event)" (complete)="editorsResized()"></resize-bar>
     </div>
     <div class="right-panel" [style.left]="rightPanelLeft">
         <div class="input-pane" [style.height]="inputPaneHeight">
+            <div id="input-editor" class="editor" #inputEditor>var foo = "bar";</div>
         </div>
         <div class="resize-input-pane" [style.top]="inputPaneHeight">
-            <resize-bar [vertical]="true" (delta)="resizeInput($event)"></resize-bar>
+            <resize-bar [vertical]="true" (delta)="resizeInput($event)" (complete)="editorsResized()"></resize-bar>
         </div>
         <div class="controls" #controls [style.top]="controlsTop">
-            <div>foo</div>
-            <div>bar</div>
+            <button type="button" (click)="runInput()">Run!</button>
         </div>
         <div class="output-pane" [style.top]="outputPaneTop">
-            {{response}}
+            <div id="output-editor" class="editor" #outputEditor></div>
         </div>
     </div>
 </div>

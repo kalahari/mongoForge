@@ -22,7 +22,7 @@ export interface Tab {
     //moduleId: module.id,
     templateUrl: 'component/layout/tabs.html',
     //directives: [],
-    encapsulation: ViewEncapsulation.Native,
+    //encapsulation: ViewEncapsulation.Native,
 })
 
 export class Tabs {

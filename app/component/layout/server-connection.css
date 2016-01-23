@@ -4,7 +4,7 @@
     left: 0em;
     bottom: 0em;
     overflow: auto;
-    background-color: #ffff00;
+    /*background-color: #ffff00;*/
 }
 
 .resize-left-bar {
@@ -12,7 +12,7 @@
     top: 0em;
     bottom: 0em;
     width: 5px;
-    background-color: #999900;
+    /*background-color: #999900;*/
 }
 
 .right-panel {
@@ -27,7 +27,7 @@
     top: 0em;
     left: 0em;
     right: 0em;
-    background-color: #00ffff;
+    /*background-color: #00ffff;*/
 }
 
 .resize-input-pane {
@@ -35,14 +35,14 @@
     left: 0em;
     right: 0em;
     height: 5px;
-    background-color: #009999;
+    /*background-color: #009999;*/
 }
 
 .controls {
     position: absolute;
     left: 0em;
     right: 0em;
-    background-color: #ffffff;
+    /*background-color: #ffffff;*/
 }
 
 .output-pane {
@@ -50,5 +50,13 @@
     bottom: 0em;
     left: 0em;
     right: 0em;
-    background-color: #ff00ff;
+    /*background-color: #ff00ff;*/
+}
+
+.editor {
+    position: absolute;
+    top: 0em;
+    bottom: 0em;
+    left: 0em;
+    right: 0em;
 }

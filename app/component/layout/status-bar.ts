@@ -10,7 +10,7 @@ var error = Debug('mf:component/layout/StatusBar:error');
     selector: 'status-bar',
     //moduleId: module.id,
     templateUrl: 'component/layout/status-bar.html',
-    encapsulation: ViewEncapsulation.Native,
+    //encapsulation: ViewEncapsulation.Native,
 })
 
 export class StatusBar {

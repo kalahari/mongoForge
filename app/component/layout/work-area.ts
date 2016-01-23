@@ -14,7 +14,7 @@ var error = Debug('mf:component/layout/WorkArea:error');
     selector: 'work-area',
     //moduleId: module.id,
     templateUrl: 'component/layout/work-area.html',
-    encapsulation: ViewEncapsulation.Native,
+    //encapsulation: ViewEncapsulation.Native,
     directives: [ServerConnection],
 })
 

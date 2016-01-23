@@ -12,7 +12,7 @@ var error = Debug('mf:component/layout/TopNav:error');
     selector: 'top-nav',
     //moduleId: module.id,
     templateUrl: 'component/layout/top-nav.html',
-    encapsulation: ViewEncapsulation.Native,
+    //encapsulation: ViewEncapsulation.Native,
 })
 
 export class TopNav {

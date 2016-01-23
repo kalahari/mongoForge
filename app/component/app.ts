@@ -19,7 +19,7 @@ var error = Debug('mf:component/App:error');
     templateUrl: 'component/app.html',
     styleUrls: ['component/app.css'],
     directives: [Tabs,TopNav,WorkArea,StatusBar],
-    encapsulation: ViewEncapsulation.Native,
+    //encapsulation: ViewEncapsulation.Native,
 })
 
 export class App implements AfterViewInit {

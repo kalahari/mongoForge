@@ -6,7 +6,8 @@ import {Component, Input, OnInit, OnChanges, ViewChild,
     ElementRef, ViewEncapsulation, AfterViewInit} from 'angular2/core';
 import {Tab} from './tabs';
 import {ResizeBar, ResizeDelta} from './resize-bar';
-import {Connection, ConnectionTab} from '../../data/connection'
+import {Connection, ConnectionTab} from '../../data/connection';
+//import 'ace-builds/src-noconflict/ace';
 
 var debug = Debug('mf:component/layout/ServerConnection');
 var error = Debug('mf:component/layout/ServerConnection:error');
@@ -19,20 +20,21 @@ const MIN_INPUT_HEIGHT = 40;
     //moduleId: module.id,
     templateUrl: 'component/layout/server-connection.html',
     styleUrls: ['component/layout/server-connection.css'],
-    encapsulation: ViewEncapsulation.Native,
+    //encapsulation: ViewEncapsulation.Native,
     directives: [ResizeBar],
 })
 
 export class ServerConnection implements OnInit, AfterViewInit {
     @Input() tab: ConnectionTab;
     @ViewChild('controls') controls: ElementRef;
+    @ViewChild('inputEditor') inputEditorElement: ElementRef;
+    @ViewChild('outputEditor') outputEditorElement: ElementRef;
 
-    response = "";
     uri: string;
     conn: Connection;
-    output: any;
-    history = ["db.collection('test').find({}).toArray()"];
-    
+    inputEditor: AceAjax.Editor;
+    outputEditor: AceAjax.Editor;
+        
     private _leftBarWidth = 50;
     private _resizeLeftBarWidth = 5;
     private _inputPaneHeight = 100;
@@ -64,19 +66,31 @@ export class ServerConnection implements OnInit, AfterViewInit {
     //     debug('constructor');
     // }
     
+    editorsResized() {
+        this.inputEditor.resize();
+        this.outputEditor.resize();
+    }
+    
     resize() {
         debug("resize()");
         if(!this.controls || !this.controls.nativeElement) {
-            error("Nothig found for controls: " + util.inspect(this.controls));
-            return;
+            let message = "Nothig found for controls: " + util.inspect(this.controls);
+            error(message);
+            return Promise.reject(new Error(message));
         }
         let newHeight = this.controls.nativeElement.clientHeight;
         debug("resize newHeight: %s, _controlsHeight: %s",
             newHeight, this._controlsHeight);
         if(this._controlsHeight !== newHeight) {
-            // setImmediate prevents mutate after check exception
-            setImmediate(() => this._controlsHeight = newHeight);
+            return new Promise<void>((resolve, reject) => {
+                // setImmediate prevents mutate after check exception
+                setImmediate(() => {
+                    this._controlsHeight = newHeight;
+                    resolve();
+                });
+            });
         }
+        return Promise.resolve();
     }
     
     ngOnInit() {
@@ -88,13 +102,23 @@ export class ServerConnection implements OnInit, AfterViewInit {
         this.conn.on('rawError', error => this.err(error));
         this.conn.connect()
             //.then(() => this.conn.getServerStatus())
-            .then(() => this.response += "### CONNECTED: " + this.uri + "\n")
+            .then(() => this.appendOutput("// CONNECTED: " + this.uri + "\n"))
             .then(() => this.conn.ping())
             .catch(e => this.err(e));
     }
     
     ngAfterViewInit() {
-        this.resize();
+        this.resize()
+            .then(() => {
+                //console.log(util.inspect(ace));
+                this.inputEditor = ace.edit(this.inputEditorElement.nativeElement);
+                this.inputEditor.setTheme('ace/theme/cobalt');
+                this.inputEditor.getSession().setMode("ace/mode/javascript");
+                this.outputEditor = ace.edit(this.outputEditorElement.nativeElement);
+                this.outputEditor.setTheme('ace/theme/cobalt');
+                this.outputEditor.setReadOnly(true);
+                this.inputEditor.getSession().setMode("ace/mode/javascript");
+            });
     }
     
     resizeLeftBar(delta: ResizeDelta) {
@@ -114,9 +138,9 @@ export class ServerConnection implements OnInit, AfterViewInit {
         }
     }
     
-    ngOnChange() {
-        debug('ngOnChange()');
-        this.output.scrollTop = this.output.scrollHeight - this.output.clientHeight;
+    runInput() {
+        debug('runInput()');
+        this.runCommand(this.inputEditor.getSession().getValue());
     }
     
     runCommand(command: string) {
@@ -129,7 +153,6 @@ export class ServerConnection implements OnInit, AfterViewInit {
     execCommand(command: string, isCmdObj: boolean) {
         debug('ngOnChanges(command: %s, isCmdObj: %s)', command, isCmdObj);
         if(!isCmdObj) this.in(command);
-        this.history.push(command);
         let result = null;
         try {
             let ctx = { db: this.conn.db };
@@ -151,22 +174,40 @@ export class ServerConnection implements OnInit, AfterViewInit {
     }
     
     in(cmd: any) {
-        this.response += "\n### IN:\n" + this.stringify(cmd) + "\n";
+        this.appendOutput("\n// IN:\n// " + this.stringify(cmd, true) + "\n");
         return cmd;
     }
     
     out(val: any) {
-        this.response += "\n### OUT:\n" + this.stringify(val) + "\n";
+        this.appendOutput("\n// OUT:\n" + this.stringify(val) + "\n");
         return val;
     }
     
     err(val: any) {
-        this.response += "\n### ERR:\n" + this.stringify(val) + "\n";
+        this.appendOutput("\n// ERR:\n" + this.stringify(val) + "\n");
         return val;
     }
     
-    stringify(val: any) {
-        if(typeof val === "string") return val;
-        return util.inspect(val);
+    stringify(val: any, comment: boolean = false) {
+        let strVal = "";
+        if(typeof val === "string") {
+            strVal = val;
+        } else {
+            strVal = util.inspect(val);
+        }
+        if(comment) {
+            //strVal.trim();
+            strVal = strVal.replace("\n", "\n// ")
+        }
+        return strVal;
+    }
+    
+    appendOutput(text: string) {
+        let session = this.outputEditor.getSession();
+        session.insert({
+            row: session.getLength(),
+            column: 0,
+        }, text);
+        this.outputEditor.scrollToLine(session.getLength() - 1, false, false, null);
     }
 }
