@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "MongoDB Admin Client GUI",
   "scripts": {
-    "test": "npm check && tsc --noEmit",
+    "test": "npm run check && tsc --noEmit",
     "check": "tslint",
     "prepublish": "tsd reinstall && tsc",
     "start": "electron app"
