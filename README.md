@@ -12,7 +12,7 @@ Commmand syntax is from the [MongoDB Node.js Driver](http://mongodb.github.io/no
  * Run `npm start`
 
 # License
-Copyright 2016 Blake Mitchell <blake@barkingspoon.com>
+Copyright 2016 Blake Mitchell &lt;blake@barkingspoon.com&gt;
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
