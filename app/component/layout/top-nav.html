@@ -1,16 +1,4 @@
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <form class="navbar-form navbar-left" role="document"
-            (ngSubmit)="onSubmit()" #connectForm="ngForm">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="mongodb://..."
-                    [(ngModel)]="uri" ngControl="uri" required>
-            </div>
-            <button type="submit" class="btn btn-default">Connect</button>
-        </form>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-            </ul>
-        </div>
-    </div>
-</nav>
+<form role="document" (ngSubmit)="onSubmit()" #connectForm="ngForm">
+    <input type="text" placeholder="mongodb://..." [(ngModel)]="uri" ngControl="uri" required>
+    <button type="submit" class="btn btn-default">Connect</button>
+</form>

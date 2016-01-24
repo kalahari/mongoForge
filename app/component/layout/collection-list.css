@@ -1,0 +1,19 @@
+:host {
+    display: block;
+}
+ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+li {
+    display: block;
+    padding-right: 1em;
+    padding-left: 1em;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    cursor: default;
+}
+li.active {
+    background-color: #222;
+}

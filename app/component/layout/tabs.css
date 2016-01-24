@@ -1,0 +1,22 @@
+:host {
+    display: inline-block;
+    height: 100%;
+}
+ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+li {
+    display: inline-block;
+    padding-right: 1em;
+    padding-left: 1em;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    cursor: default;
+    height: 100%;
+}
+li.active {
+    background-color: #222;
+}

@@ -1,5 +1,3 @@
 <ul class="nav nav-tabs vcontent">
-    <li *ngFor="#tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active">
-        <a href="#">{{tab.title}}</a>
-    </li>
+    <li *ngFor="#tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active">{{tab.title}}</li>
 </ul>

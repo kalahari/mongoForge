@@ -3,7 +3,7 @@
     top: 0em;
     right: 0em;
     left: 0em;
-    /*background-color: #ff0000;*/
+    background-color: #444;
 }
 
 .work-area {
@@ -12,7 +12,6 @@
     bottom: 2em;
     left: 0em;
     right: 0em;
-    /*background-color: #00ff00;*/
 }
 
 .bottom-bar {
@@ -20,7 +19,6 @@
     bottom: 0em;
     right: 0em;
     left: 0em;
-    height: 2em;
+    height: 1.5em;
     overflow: hidden;
-    /*background-color: #0000ff;*/
 }

@@ -30,6 +30,11 @@ declare module MongoDb {
 
         public connect(): any;
     }
+    
+    export class Admin {
+        public listDatabases(callback: (err: Error, result: any) => void): void;
+        public listDatabases(): Promise<any>;
+    }
 
     // Class documentation : http://mongodb.github.io/node-mongodb-native/api-generated/db.html
     export class Db {
@@ -39,7 +44,7 @@ declare module MongoDb {
 
         public open(callback?: (err: Error, db: Db) => void): void;
         public close(forceClose?: boolean, callback?: (err: Error, result: any) => void): void;
-        public admin(callback?: (err: Error, result: any) => void): any;
+        public admin(): Admin;
         public collectionsInfo(collectionName: string, callback?: (err: Error, result: any) => void): void;
         public collectionNames(collectionName: string, options: any, callback?: (err: Error, result: any) => void): void;
 
@@ -50,6 +55,8 @@ declare module MongoDb {
         public collections(callback?: (err: Error, collections: Collection[]) => void): void;
         public eval(code: any, parameters: any[], options?: any, callback?: (err: Error, result: any) => void): void;
         //public dereference(dbRef: DbRef, callback?: (err: Error, result: any) => void): void;
+
+        public listCollections(filter?: Object, options?: Object): Cursor;
 
         public logout(callback?: (err: Error, result: any) => void): void;
         public logout(options: any, callback?: (err: Error, result: any) => void): void;
@@ -477,7 +484,8 @@ declare module MongoDb {
         // constructor(db: Db, collection: Collection, selector, fields, options);
 
         rewind(): Cursor;
-        toArray(callback?: (err: Error, results: any[]) => any): void;
+        toArray(callback: (err: Error, results: any[]) => any): void;
+        toArray(): Promise<any[]>;
         each(callback?: (err: Error, item: any) => void): void;
         count(applySkipLimit: boolean, callback?: (err: Error, count: number) => void): void;
 

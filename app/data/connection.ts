@@ -10,6 +10,14 @@ import {Tab, TabType} from '../component/layout/tabs';
 export class Connection extends EventEmitter {
     public client: MongoClient;
     public db: MongoDb.Db;
+    
+    private _background = true;
+    public get background() {
+        return this._background;
+    }
+    public set background(val: boolean) {
+        
+    }
 
     constructor(public uri: string) {
         super();
@@ -26,6 +34,22 @@ export class Connection extends EventEmitter {
     
     public getServerStatus() {
         return this.runCommand({ serverStatus: 1 });
+    }
+    
+    public getCollections() {
+        return this.db.admin().listDatabases()
+            .then(r => {
+                let ret = Promise.all(r.databases.map(dbInfo => {
+                    return this.db
+                        .db(dbInfo.name)
+                        .listCollections()
+                        .toArray()
+                        .then(collInfo => dbInfo['collections'] = collInfo);
+                })).then(() => r);
+                this.emit("rawOutput", ret);
+                return ret;
+            })
+            .catch(e => this.emit('rawError', e));
     }
     
     public ping() {

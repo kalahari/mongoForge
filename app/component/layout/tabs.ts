@@ -21,6 +21,7 @@ export interface Tab {
     selector: 'tabs',
     //moduleId: module.id,
     templateUrl: 'component/layout/tabs.html',
+    styleUrls: ['component/layout/tabs.css']
     //directives: [],
     //encapsulation: ViewEncapsulation.Native,
 })

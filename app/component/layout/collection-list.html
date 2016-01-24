@@ -1,0 +1,8 @@
+<ul *ngIf="model && model.databases">
+    <li *ngFor="#db of model.databases" (click)="selectDb(db)">
+        {{db.name}}
+        <ul *ngIf="db && db.collections">
+            <li *ngFor="#coll of db.collections" (click)="selectColl(coll)">{{coll.name}}</li>
+        </ul>
+    </li>
+</ul>

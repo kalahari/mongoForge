@@ -4,6 +4,8 @@
     left: 0em;
     bottom: 0em;
     overflow: auto;
+    padding: .5em;
+    
     /*background-color: #ffff00;*/
 }
 
@@ -42,6 +44,7 @@
     position: absolute;
     left: 0em;
     right: 0em;
+    padding: .5em;
     /*background-color: #ffffff;*/
 }
 

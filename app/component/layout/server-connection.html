@@ -1,18 +1,19 @@
 <div>
     <div class="left-bar" [style.width]="leftBarWidth">
+        <collection-list [model]="collectionList"></collection-list>
     </div>
     <div class="resize-left-bar" [style.left]="leftBarWidth">
         <resize-bar [horizontal]="true" (delta)="resizeLeftBar($event)" (complete)="editorsResized()"></resize-bar>
     </div>
     <div class="right-panel" [style.left]="rightPanelLeft">
         <div class="input-pane" [style.height]="inputPaneHeight">
-            <div id="input-editor" class="editor" #inputEditor>var foo = "bar";</div>
+            <div id="input-editor" class="editor" #inputEditor></div>
         </div>
         <div class="resize-input-pane" [style.top]="inputPaneHeight">
             <resize-bar [vertical]="true" (delta)="resizeInput($event)" (complete)="editorsResized()"></resize-bar>
         </div>
         <div class="controls" #controls [style.top]="controlsTop">
-            <button type="button" (click)="runInput()">Run!</button>
+            <button type="button" (click)="state.currentConnection.runInput()">Run!</button>
         </div>
         <div class="output-pane" [style.top]="outputPaneTop">
             <div id="output-editor" class="editor" #outputEditor></div>
