@@ -1,9 +1,9 @@
 {
   "name": "mongo-forge",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MongoDB Admin Client GUI",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm check && tsc --noEmit",
     "check": "tslint",
     "prepublish": "tsd reinstall && tsc",
     "start": "electron app"
