@@ -1,6 +1,8 @@
 # mongoForge
 MongoDB Admin Client GUI/CLI for Mac/Windows/Linux
 
+[![Build Status](https://travis-ci.org/kalahari/mongoForge.svg?branch=master)](https://travis-ci.org/kalahari/mongoForge)
+
 *Current release is extremely raw, you have been warned.*
 
 Commmand syntax is from the [MongoDB Node.js Driver](http://mongodb.github.io/node-mongodb-native/2.1/getting-started/quick-tour/#inserting-a-document), `db` will already be defined for you.
