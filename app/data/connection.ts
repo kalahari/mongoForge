@@ -2,22 +2,14 @@
 /// <reference="../../typings/tsd.d.ts" />
 /// <reference="../../local_typings/mongodb.d.ts" />
 
-import * as util from 'util';
-import {EventEmitter} from 'events';
-import {MongoClient} from 'mongodb';
-import {Tab, TabType} from '../component/layout/tabs';
+// import * as util from "util";
+import {EventEmitter} from "events";
+import {MongoClient} from "mongodb";
+import {ITab, TabType} from "../component/layout/tabs";
 
 export class Connection extends EventEmitter {
     public client: MongoClient;
     public db: MongoDb.Db;
-    
-    private _background = true;
-    public get background() {
-        return this._background;
-    }
-    public set background(val: boolean) {
-        
-    }
 
     constructor(public uri: string) {
         super();
@@ -25,37 +17,40 @@ export class Connection extends EventEmitter {
     }
 
     public connect() {
-        //console.log("connecting to: " + this.uri);
+        // console.log("connecting to: " + this.uri);
         return this.client.connect(this.uri)
             .then(db => this.db = db)
-            //.then(r => console.log("ping results: " + JSON.stringify(r)))
-            .catch(e => this.emit('rawError', e));
+            // .then(r => console.log("ping results: " + JSON.stringify(r)))
+            .catch(e => this.emit("rawError", e));
     }
-    
+
     public getServerStatus() {
         return this.runCommand({ serverStatus: 1 });
     }
-    
+
     public getCollections() {
         return this.db.admin().listDatabases()
             .then(r => {
-                let ret = Promise.all(r.databases.map(dbInfo => {
+                let ret = Promise.all(r.databases.map((dbInfo: any) => {
                     return this.db
                         .db(dbInfo.name)
                         .listCollections()
                         .toArray()
-                        .then(collInfo => dbInfo['collections'] = collInfo);
+                        // FIXME: need an interface for dbInfo
+                        /* tslint:disable:no-string-literal */
+                        .then(collInfo => dbInfo["collections"] = collInfo);
+                        /* tslint:enable:no-string-literal */
                 })).then(() => r);
                 this.emit("rawOutput", ret);
                 return ret;
             })
-            .catch(e => this.emit('rawError', e));
+            .catch(e => this.emit("rawError", e));
     }
-    
+
     public ping() {
         return this.runCommand({ ping: 1 });
     }
-    
+
     public runCommand(cmd: Object) {
         this.emit("rawInput", cmd);
         return this.db.command(cmd)
@@ -66,17 +61,17 @@ export class Connection extends EventEmitter {
     }
 }
 
-export class ConnectionTab implements Tab {
+export class ConnectionTab implements ITab {
     private static nextTabId = 0;
-    
-    active = true;
-    uri = "";
-    id = ConnectionTab.nextTabId++;
 
-    get title() {
+    public active = true;
+    public uri = "";
+    public id = ConnectionTab.nextTabId++;
+
+    public get title() {
         return this.uri;
     }
-    get type() {
+    public get type() {
         return TabType.connection;
     }
 }

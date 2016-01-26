@@ -1,58 +1,57 @@
 "use strict";
 
-import * as Debug from 'debug';
-import {EventEmitter} from 'events'
-import {ConnectionState} from './connection';
-import {ConnectionTab} from '../data/connection';
+import {EventEmitter} from "events";
+import {ConnectionState} from "./connection";
+import {ConnectionTab} from "../data/connection";
 
 const DEFAULT_LEFT_BAR_WIDTH = 150;
 const DEFAULT_INPUT_PANEL_HEIGHT = 350;
 
 export class WorkspaceState extends EventEmitter {
-    connections: ConnectionState[] = [];
-    currentConnection: ConnectionState;
-    
-    get currentLeftBarWidth() {
-        if(this.currentConnection) {
+    public connections: ConnectionState[] = [];
+    public currentConnection: ConnectionState;
+
+    public get currentLeftBarWidth() {
+        if (this.currentConnection) {
             return this.currentConnection.leftBarWidth || DEFAULT_LEFT_BAR_WIDTH;
         }
         return DEFAULT_LEFT_BAR_WIDTH;
     }
-    set currentLeftBarWidth(val: number) {
+    public set currentLeftBarWidth(val: number) {
         this.currentConnection.leftBarWidth = val;
     }
-    
-    get currentInputPanelHeight() {
-        if(this.currentConnection) {
+
+    public get currentInputPanelHeight() {
+        if (this.currentConnection) {
             return this.currentConnection.inputHeight || DEFAULT_INPUT_PANEL_HEIGHT;
         }
         return DEFAULT_INPUT_PANEL_HEIGHT;
     }
-    set currentInputPanelHeight(val: number) {
+    public set currentInputPanelHeight(val: number) {
         this.currentConnection.inputHeight = val;
     }
-    
-    get currentCollectionList() {
-        if(this.currentConnection) {
+
+    public get currentCollectionList() {
+        if (this.currentConnection) {
             return this.currentConnection.collectionList;
         }
-        return null;
+        return undefined;
     }
-    
-    swapState(newTab: ConnectionTab) {
+
+    public swapState(newTab: ConnectionTab) {
         let newConnection = this.connections.find(c => c.tab === newTab);
-        if(newConnection === undefined) {
+        if (newConnection === undefined) {
             newConnection = new ConnectionState();
             this.connections.push(newConnection);
-            
+
             newConnection.on("newOutput", () => this.newConnectionOutput(newConnection));
             newConnection.input = ace.createEditSession(`// insert and find some documents
-var test = db.collection('test');
+var test = db.collection("test");
 
 test.insert({ a: 1 });
 test.insert({ a: 2 });
-test.insert({ a: 3, b: 'one' });
-test.insert({ a: 4, b: 'two' });
+test.insert({ a: 3, b: "one" });
+test.insert({ a: 4, b: "two" });
 test.insert({ a: 5, c: new Date() });
 test.insert({ a: 1 });
 
@@ -67,14 +66,14 @@ test.find({})
             newConnection.connect();
         }
         this.currentConnection = newConnection;
-        if(newConnection.newOutput) {
+        if (newConnection.newOutput) {
             setImmediate(() => this.newConnectionOutput(newConnection));
         }
     }
-    
-    newConnectionOutput(connection: ConnectionState) {
-        if(connection === this.currentConnection) {
-            this.emit("newOutput")
+
+    public newConnectionOutput(connection: ConnectionState) {
+        if (connection === this.currentConnection) {
+            this.emit("newOutput");
             connection.newOutput = false;
         }
     }

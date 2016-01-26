@@ -1,32 +1,30 @@
 "use strict";
 
-import * as Debug from 'debug';
-import {Component, Output, ViewEncapsulation, EventEmitter} from 'angular2/core';
-import {NgForm} from 'angular2/common';
-import {Connection, ConnectionTab} from '../../data/connection';
+import * as Debug from "debug";
+import {Component, Output, /*ViewEncapsulation,*/ EventEmitter} from "angular2/core";
 
-var debug = Debug('mf:component/layout/TopNav');
-var error = Debug('mf:component/layout/TopNav:error');
+let debug = Debug("mf:component/layout/TopNav");
+// let error = Debug("mf:component/layout/TopNav:error");
 
 @Component({
-    selector: 'top-nav',
-    //moduleId: module.id,
-    templateUrl: 'component/layout/top-nav.html',
-    styleUrls: ['component/layout/top-nav.css'],
-    //encapsulation: ViewEncapsulation.Native,
+    // encapsulation: ViewEncapsulation.Native,
+    // moduleId: module.id,
+    selector: "top-nav",
+    styleUrls: ["component/layout/top-nav.css"],
+    templateUrl: "component/layout/top-nav.html",
 })
 
 export class TopNav {
-    uri = "mongodb://localhost";
-    submitting = false;
-    @Output() connect = new EventEmitter<string>();
-    
+    public uri = "mongodb://localhost";
+    public submitting = false;
+    @Output() public connect = new EventEmitter<string>();
+
     // constructor() {
-    //         
+    //     
     // }
 
-    onSubmit() {
-        debug('onSubmit()');
+    public onSubmit() {
+        debug("onSubmit()");
         this.submitting = true;
         debug("submitting: " + this.uri);
         this.connect.emit(this.uri);

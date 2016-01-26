@@ -1,20 +1,20 @@
 "use strict";
 
-import * as Debug from 'debug';
-import {Component, Input, Output, ViewEncapsulation, EventEmitter} from 'angular2/core';
+// import * as Debug from "debug";
+import {Component, Input/*, ViewEncapsulation*/} from "angular2/core";
 
-var debug = Debug('mf:component/layout/CollectionList');
-var error = Debug('mf:component/layout/CollectionList:error');
+// let debug = Debug("mf:component/layout/CollectionList");
+// let error = Debug("mf:component/layout/CollectionList:error");
 
 @Component({
-    selector: 'collection-list',
-    //moduleId: module.id,
-    templateUrl: 'component/layout/collection-list.html',
-    styleUrls: ['component/layout/collection-list.css']
-    //directives: [],
-    //encapsulation: ViewEncapsulation.Native,
+    // directives: [],
+    // encapsulation: ViewEncapsulation.Native,
+    // moduleId: module.id,
+    selector: "collection-list",
+    styleUrls: ["component/layout/collection-list.css"],
+    templateUrl: "component/layout/collection-list.html",
 })
 
 export class CollectionList {
-    @Input() model: any;
+    @Input() public model: any;
 }

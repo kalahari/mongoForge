@@ -1,57 +1,57 @@
 "use strict";
 
-import * as Debug from 'debug';
-import * as util from 'util';
-import {Component, Input, Output, ViewEncapsulation, EventEmitter} from 'angular2/core';
+import * as Debug from "debug";
+import * as util from "util";
+import {Component, Input, Output, /*ViewEncapsulation,*/ EventEmitter} from "angular2/core";
 
-var debug = Debug('mf:component/layout/ResizeBar');
-var error = Debug('mf:component/layout/ResizeBar:error');
+let debug = Debug("mf:component/layout/ResizeBar");
+let error = Debug("mf:component/layout/ResizeBar:error");
 
-export interface ResizeDelta {
+export interface IResizeDelta {
     x: number;
     y: number;
 }
 
 @Component({
-    selector: 'resize-bar',
-    //moduleId: module.id,
-    templateUrl: 'component/layout/resize-bar.html',
-    styleUrls: ['component/layout/resize-bar.css'],
-    //encapsulation: ViewEncapsulation.Native,
+    // encapsulation: ViewEncapsulation.Native,
+    // moduleId: module.id,
+    selector: "resize-bar",
+    styleUrls: ["component/layout/resize-bar.css"],
+    templateUrl: "component/layout/resize-bar.html",
 })
 
 export class ResizeBar {
-    @Input() horizontal = false;
-    @Input() vertical = false;
-    @Output() delta = new EventEmitter<ResizeDelta>();
-    @Output() complete = new EventEmitter<void>();
-    acting = false;
-    startX: number;
-    startY: number;
-    lastX: number;
-    lastY: number;
-    mouseMoveListener: EventListener = evt => this.mouseMove(<MouseEvent>evt);
-    mouseUpListener: EventListener = evt => this.mouseUp(<MouseEvent>evt)
-    
+    @Input() public horizontal = false;
+    @Input() public vertical = false;
+    @Output() public delta = new EventEmitter<IResizeDelta>();
+    @Output() public complete = new EventEmitter<void>();
+    public acting = false;
+    public startX: number;
+    public startY: number;
+    public lastX: number;
+    public lastY: number;
+    public mouseMoveListener: EventListener = evt => this.mouseMove(<MouseEvent>evt);
+    public mouseUpListener: EventListener = evt => this.mouseUp(<MouseEvent>evt);
+
     get resizeClass() {
-        debug('get resizeClass()');
-        if(this.horizontal && this.vertical) {
+        debug("get resizeClass()");
+        if (this.horizontal && this.vertical) {
             return "resize-both";
-        } else if(this.horizontal) {
+        } else if (this.horizontal) {
             return "resize-horizontal";
-        } else if(this.vertical) {
+        } else if (this.vertical) {
             return "resize-vertical";
         } else {
             return "";
         }
     }
-    
-    mouseDown(event: MouseEvent) {
+
+    public mouseDown(event: MouseEvent) {
         debug("mouseDown(event: %s)", event);
-        if(!this.horizontal && !this.vertical) {
+        if (!this.horizontal && !this.vertical) {
             debug("Nohting to do, both directions disabled");
         }
-        if(this.acting) {
+        if (this.acting) {
             error("Got mouseDown when already active!: " + util.inspect(event));
             return;
         }
@@ -62,19 +62,19 @@ export class ResizeBar {
         window.addEventListener("mouseup", this.mouseUpListener);
         event.preventDefault();
     }
-    
-    mouseMove(event: MouseEvent) {
+
+    public mouseMove(event: MouseEvent) {
         debug("mouseMove(event: %s)", event);
-        if(!this.acting) {
+        if (!this.acting) {
             error("Got mouseMove when not active!: " + util.inspect(event));
             return;
         }
         this.dispatchDelta(event);
     }
-    
-    mouseUp(event: MouseEvent) {
+
+    public mouseUp(event: MouseEvent) {
         debug("mouseUp(event: %s)", event);
-        if(!this.acting) {
+        if (!this.acting) {
             error("Got mouseUp when not active!: " + util.inspect(event));
             return;
         }
@@ -82,21 +82,23 @@ export class ResizeBar {
         window.removeEventListener("mousemove", this.mouseMoveListener);
         window.removeEventListener("mouseup", this.mouseUpListener);
         this.acting = false;
-        this.complete.emit(null);
+        this.complete.emit(undefined);
     }
-    
+
     private dispatchDelta(event: MouseEvent) {
-        debug('dispatchDelta(event: %s)', event);
+        debug("dispatchDelta(event: %s)", event);
         let delta = {
             x: event.screenX - this.lastX,
             y: event.screenY - this.lastY,
         };
-        
+
         this.lastX = event.screenX;
         this.lastY = event.screenY;
-        
-        if(delta.x === 0 && delta.y === 0) return;
-        
+
+        if (delta.x === 0 && delta.y === 0) {
+            return;
+        }
+
         this.delta.emit(delta);
     }
 }
