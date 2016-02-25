@@ -63,4 +63,29 @@ export class App implements AfterViewInit {
         this.tabs.addTab(tab, showOptions);
         setImmediate(() => this.resize());
     }
+
+    @Input() public tab: ITab;
+    public modal: "connection" = null;
+    public hello: boolean = true;
+
+    public state = new WorkspaceState();
+
+    public tabSelected() {
+        debug("tabSelected()");
+        if (this.tab && this.tab.type === TabType.connection) {
+            this.hello = false;
+        } else {
+            this.hello = true;
+        }
+    }
+
+    public ngOnChanges(changes: { [propName: string]: SimpleChange }) {
+        debug("ngOnChanges(chages: %s)", changes);
+        // FIXME: need an interface for changes
+        /* tslint:disable:no-string-literal */
+        if (changes["tab"]) {
+        /* tslint:enable:no-string-literal */
+            this.tabSelected();
+        }
+    }
 }

@@ -1,7 +1,0 @@
-<div *ngIf="hello">
-    <p>This useless tab will close on first connection.</p>
-</div>
-<div *ngIf="!hello" [ngSwitch]="modal">
-    <connection-modal *ngSwitchWhen="'connection''" [state]="state"></connection-modal> 
-    <server-connection *ngSwitchDefault [tab]="tab" [state]="state" (modal)="modal = $event"></server-connection>
-</div>
