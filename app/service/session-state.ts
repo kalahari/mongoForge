@@ -4,25 +4,25 @@ import * as Debug from "debug";
 import * as util from "util";
 import * as moment from "moment";
 import {EventEmitter} from "events";
-import {Connection, ConnectionTab} from "../data/connection";
+import {ServerConnection, ServerConnectionTab} from "./server-connection";
 
-let debug = Debug("mf:model/ConnectionState");
-// let error = Debug("mf:model/ConnectionState:error");
+let debug = Debug("mf:model/SessionState");
+// let error = Debug("mf:model/SessionState:error");
 
-export class ConnectionState extends EventEmitter {
-    public connection: Connection;
+export class SessionState extends EventEmitter {
+    public connection: ServerConnection;
     public input: AceAjax.IEditSession;
     public output: AceAjax.IEditSession;
     public leftBarWidth: number;
     public inputHeight: number;
-    public tab: ConnectionTab;
+    public tab: ServerConnectionTab;
     public newOutput = false;
     public collectionList: any;
 
     private _start: moment.Moment;
 
     public connect() {
-        this.connection = new Connection(this.tab.uri);
+        this.connection = new ServerConnection(this.tab.uri);
         this.connection.on("rawInput", (input: any) => this.in(input));
         this.connection.on("rawOutput", (output: any) => this.out(output));
         this.connection.on("rawError", (err: any) => this.err(err));

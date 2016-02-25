@@ -4,8 +4,8 @@ import * as Debug from "debug";
 import * as util from "util";
 import {Component, Input, Output, /*ViewEncapsulation,*/ EventEmitter} from "angular2/core";
 
-let debug = Debug("mf:component/layout/ResizeBar");
-let error = Debug("mf:component/layout/ResizeBar:error");
+let debug = Debug("mf:component/resize-bar/ResizeBar");
+let error = Debug("mf:component/resize-bar/ResizeBar:error");
 
 export interface IResizeDelta {
     x: number;
@@ -16,8 +16,8 @@ export interface IResizeDelta {
     // encapsulation: ViewEncapsulation.Native,
     // moduleId: module.id,
     selector: "resize-bar",
-    styleUrls: ["component/layout/resize-bar.css"],
-    templateUrl: "component/layout/resize-bar.html",
+    styleUrls: ["component/resize-bar/resize-bar.css"],
+    templateUrl: "component/resize-bar/resize-bar.html",
 })
 
 export class ResizeBar {
@@ -95,7 +95,7 @@ export class ResizeBar {
         this.lastX = event.screenX;
         this.lastY = event.screenY;
 
-        if (delta.x === 0 && delta.y === 0) {
+        if ((!this.horizontal || delta.x === 0) && (!this.vertical || delta.y === 0)) {
             return;
         }
 

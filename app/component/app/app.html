@@ -1,5 +1,5 @@
 <div class="top-bar" #topBar>
-    <top-nav (connect)="connectToServer($event)"></top-nav>
+    <top-nav (connect)="connectToServer($event, false)" (connectOptions)="connectToServer($event, true)"></top-nav>
     <tabs #tabs (tabSelected)="setCurrentTab($event)"></tabs>
 </div>
 <div class="work-area" [style.top]="topBarHeight">

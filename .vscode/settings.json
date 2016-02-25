@@ -11,5 +11,7 @@
         "**/*.js.map": {
             "when": "$(basename)"
         }
-    }
+    },
+    "typescript.useCodeSnippetsOnMethodSuggest": true,
+    "typescript.tsdk": "./node_modules/typescript/lib"
 }

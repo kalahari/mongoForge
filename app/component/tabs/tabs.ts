@@ -3,8 +3,8 @@
 import * as Debug from "debug";
 import {Component, Output, /*ViewEncapsulation,*/ EventEmitter} from "angular2/core";
 
-let debug = Debug("mf:component/layout/Tabs");
-// let error = Debug("mf:component/layout/Tabs:error");
+let debug = Debug("mf:component/tabs/Tabs");
+// let error = Debug("mf:component/tabs/Tabs:error");
 
 export enum TabType {
     hello = 1,
@@ -22,8 +22,8 @@ export interface ITab {
     // encapsulation: ViewEncapsulation.Native,
     // moduleId: module.id,
     selector: "tabs",
-    styleUrls: ["component/layout/tabs.css"],
-    templateUrl: "component/layout/tabs.html",
+    styleUrls: ["component/tabs/tabs.css"],
+    templateUrl: "component/tabs/tabs.html",
 })
 
 export class Tabs {
@@ -34,7 +34,7 @@ export class Tabs {
     constructor() {
         debug("constructor()");
         this.helloTab = { active: true, title: "Hello!", type: TabType.hello };
-        this.addTab(this.helloTab);
+        this.addTab(this.helloTab, false);
     }
 
     public selectTab(tab: ITab) {
@@ -45,7 +45,7 @@ export class Tabs {
         this.tabSelected.emit(tab);
     }
 
-    public addTab(tab: ITab) {
+    public addTab(tab: ITab, showOptions: boolean) {
         debug("addTab(tab: %s)", tab);
         if (this.helloTab !== undefined && this.helloTab !== tab) {
             this.removeTab(this.helloTab);

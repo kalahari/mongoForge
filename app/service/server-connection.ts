@@ -5,11 +5,13 @@
 // import * as util from "util";
 import {EventEmitter} from "events";
 import {MongoClient} from "mongodb";
-import {ITab, TabType} from "../component/layout/tabs";
+import {ITab, TabType} from "../component/tabs/tabs";
+import {DatabaseList, Database} from "../model/database-list";
 
-export class Connection extends EventEmitter {
+export class ServerConnection extends EventEmitter {
     public client: MongoClient;
-    public db: MongoDb.Db;
+    public connectDb: MongoDb.Db;
+    public currentDb: MongoDb.Db;
 
     constructor(public uri: string) {
         super();
@@ -19,8 +21,7 @@ export class Connection extends EventEmitter {
     public connect() {
         // console.log("connecting to: " + this.uri);
         return this.client.connect(this.uri)
-            .then(db => this.db = db)
-            // .then(r => console.log("ping results: " + JSON.stringify(r)))
+            .then(db => this.currentDb = this.connectDb = db)
             .catch(e => this.emit("rawError", e));
     }
 
@@ -29,18 +30,18 @@ export class Connection extends EventEmitter {
     }
 
     public getCollections() {
-        return this.db.admin().listDatabases()
+        return this.connectDb.admin().listDatabases()
             .then(r => {
-                let ret = Promise.all(r.databases.map((dbInfo: any) => {
-                    return this.db
+                let ret = Promise.all(r.databases.map((dbInfo: Database) => {
+                    return this.connectDb
                         .db(dbInfo.name)
                         .listCollections()
                         .toArray()
                         // FIXME: need an interface for dbInfo
                         /* tslint:disable:no-string-literal */
-                        .then(collInfo => dbInfo["collections"] = collInfo);
+                        .then(collInfo => dbInfo.collections = collInfo);
                         /* tslint:enable:no-string-literal */
-                })).then(() => r);
+                })).then(() => <DatabaseList>r);
                 this.emit("rawOutput", ret);
                 return ret;
             })
@@ -53,7 +54,7 @@ export class Connection extends EventEmitter {
 
     public runCommand(cmd: Object) {
         this.emit("rawInput", cmd);
-        return this.db.command(cmd)
+        return this.connectDb.command(cmd)
             .then(r => {
                 this.emit("rawOutput", r);
                 return r;
@@ -61,12 +62,20 @@ export class Connection extends EventEmitter {
     }
 }
 
-export class ConnectionTab implements ITab {
+export interface IServerConnectionOptions {
+    username: string;
+    password: string;
+    database: string;
+}
+
+export class ServerConnectionTab implements ITab {
     private static nextTabId = 0;
 
     public active = true;
     public uri = "";
-    public id = ConnectionTab.nextTabId++;
+    public options: IServerConnectionOptions = null;
+    public modal: string = null;
+    public id = ServerConnectionTab.nextTabId++;
 
     public get title() {
         return this.uri;

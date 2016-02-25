@@ -4,14 +4,14 @@ import * as Debug from "debug";
 import * as util from "util";
 import "moment-duration-format";
 import {Component, Input, ViewChild, ElementRef, /*ViewEncapsulation,*/ AfterViewInit} from "angular2/core";
-import {ResizeBar, IResizeDelta} from "./resize-bar";
-import {CollectionList} from "./collection-list";
+import {ResizeBar, IResizeDelta} from "../resize-bar/resize-bar";
+import {CollectionList} from "../collection-list/collection-list";
 import {ConnectionTab} from "../../data/connection";
 import {WorkspaceState} from "../../model/workspace";
 // import "ace-builds/src-noconflict/ace";
 
-let debug = Debug("mf:component/layout/ServerConnection");
-let error = Debug("mf:component/layout/ServerConnection:error");
+let debug = Debug("mf:component/server-connection/ServerConnection");
+let error = Debug("mf:component/server-connection/ServerConnection:error");
 
 const MIN_LEFT_BAR_WIDTH = 25;
 const MIN_INPUT_HEIGHT = 40;
@@ -21,8 +21,8 @@ const MIN_INPUT_HEIGHT = 40;
     // encapsulation: ViewEncapsulation.Native,
     // moduleId: module.id,
     selector: "server-connection",
-    styleUrls: ["component/layout/server-connection.css"],
-    templateUrl: "component/layout/server-connection.html",
+    styleUrls: ["component/server-connection/server-connection.css"],
+    templateUrl: "component/server-connection/server-connection.html",
 })
 
 export class ServerConnection implements AfterViewInit {
@@ -30,7 +30,7 @@ export class ServerConnection implements AfterViewInit {
     @ViewChild("inputEditor") public inputEditorElement: ElementRef;
     @ViewChild("outputEditor") public outputEditorElement: ElementRef;
 
-    public state = new WorkspaceState();
+    @Input() public state: WorkspaceState;
 
     public inputEditor: AceAjax.Editor;
     public outputEditor: AceAjax.Editor;

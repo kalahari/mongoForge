@@ -3,7 +3,7 @@
 
 import "source-map-support/register";
 import {bootstrap} from "angular2/platform/browser";
-import { App } from "./component/app";
+import { App } from "./component/app/app";
 import { ipcRenderer } from "electron";
 
 // FXIME: setting
