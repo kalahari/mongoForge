@@ -2,34 +2,41 @@
 
 import * as Debug from "debug";
 import * as util from "util";
-import {Component, Input, ViewChild, ElementRef, AfterViewInit} from "angular2/core";
-import {Tabs, ITab} from "../tabs/tabs";
+import {Component, Input, ViewChild, ElementRef, AfterViewInit, Inject} from "angular2/core";
+import {Tabs} from "../tabs/tabs";
+import {Tab} from "../../model/tab";
 import {TopNav} from "../top-nav/top-nav";
-import {WorkArea} from "../work-area/work-area";
 import {StatusBar} from "../status-bar/status-bar";
-import {ServerConnectionTab} from "../../service/server-connection";
+import {ConnectionModal} from "../modal/connection-modal/connection-modal";
+import {ServerConnection} from "../server-connection/server-connection";
+import {SessionState} from "../../model/session-state";
+import {SessionService} from "../../service/session-service";
 
 let debug = Debug("mf:component/app/App");
 let error = Debug("mf:component/app/App:error");
 
 @Component({
-    directives: [Tabs, TopNav, WorkArea, StatusBar],
+    directives: [Tabs, TopNav, StatusBar, ConnectionModal, ServerConnection],
     // encapsulation: ViewEncapsulation.Native,
     // moduleId: module.id,
     selector: "app",
     styleUrls: ["component/app/app.css"],
     templateUrl: "component/app/app.html",
+    providers:[SessionService],
 })
 
 export class App implements AfterViewInit {
     @ViewChild("topBar") public topBar: ElementRef;
     @ViewChild("tabs") public tabs: Tabs;
     public topBarHeight = "9em";
-    public currentTab: ITab;
+    public currentSession: SessionState;
+    public get hello() {
+        return !this.currentSession;
+    }
 
-    // constructor() {
-    //     debug("constructor()");
-    // }
+    constructor(private sessionService: SessionService) {
+        debug("constructor()");
+    }
 
     public resize() {
         debug("resize()");
@@ -51,16 +58,19 @@ export class App implements AfterViewInit {
         this.resize();
     }
 
-    public setCurrentTab(tab: ITab) {
-        debug("setCurrentTab(tab: %s)", tab);
-        this.currentTab = tab;
-    }
-
     public connectToServer(uri: string, showOptions: boolean) {
         debug("connectToServer(uri: %s)", uri);
-        let tab = new ServerConnectionTab();
-        tab.uri = uri;
+        let tab = new Tab(uri);
         this.tabs.addTab(tab);
+        this.tabs.selectTab(tab);
+        this.currentSession = this.sessionService.getSession(tab.id);
+        if(showOptions) {
+            this.currentSession.modal = "connection";
+        }
         setImmediate(() => this.resize());
+    }
+    
+    public tabSelected(tab: Tab) {
+        this.currentSession = this.sessionService.getSession(tab.id);
     }
 }

@@ -2,22 +2,10 @@
 
 import * as Debug from "debug";
 import {Component, Input, Output, /*ViewEncapsulation,*/ EventEmitter} from "angular2/core";
+import {Tab} from "../../model/tab";
 
 let debug = Debug("mf:component/tabs/Tabs");
 // let error = Debug("mf:component/tabs/Tabs:error");
-
-export enum TabType {
-    hello = 1,
-    connection,
-}
-
-export interface ITab {
-    id: number;
-    title: string;
-    type: TabType;
-}
-
-export const HELLO_TAB_ID = 1;
 
 @Component({
     // directives: [],
@@ -29,35 +17,31 @@ export const HELLO_TAB_ID = 1;
 })
 
 export class Tabs {
-    public tabs: ITab[] = [];
-    public helloTab: ITab;
-    @Input() public activeTab = HELLO_TAB_ID;
-    @Output() public tabSelected = new EventEmitter<ITab>();
+    public tabs: Tab[] = [];
+    @Input() public activeTabId = Tab.HelloTab().id;
+    @Output() public tabSelected = new EventEmitter<Tab>();
 
     constructor() {
         debug("constructor()");
-        this.helloTab = { id: HELLO_TAB_ID, title: "Hello!", type: TabType.hello };
-        this.addTab(this.helloTab);
+        this.addTab(Tab.HelloTab());
     }
 
-    public selectTab(tab: ITab) {
+    public selectTab(tab: Tab) {
         debug("selectTab(tab: %s)", tab);
-        if(this.activeTab !== tab.id) {
+        if(this.activeTabId !== tab.id) {
             this.tabSelected.emit(tab);
         }
     }
 
-    public addTab(tab: ITab) {
+    public addTab(tab: Tab) {
         debug("addTab(tab: %s)", tab);
-        if (this.helloTab !== undefined && this.helloTab !== tab) {
-            this.removeTab(this.helloTab);
-            this.helloTab = undefined;
+        if (this.tabs.indexOf(Tab.HelloTab()) >= 0) {
+            this.removeTab(Tab.HelloTab());
         }
-
         this.tabs.push(tab);
     }
 
-    public removeTab(tab: ITab) {
+    public removeTab(tab: Tab) {
         debug("removeTab(tab: %s)", tab);
         this.tabs.splice(this.tabs.indexOf(tab), 1);
     }

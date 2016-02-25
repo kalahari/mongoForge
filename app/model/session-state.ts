@@ -4,30 +4,56 @@ import * as Debug from "debug";
 import * as util from "util";
 import * as moment from "moment";
 import {EventEmitter} from "events";
-import {ServerConnection, ServerConnectionTab} from "./server-connection";
+import {ServerConnection, IServerConnectionOptions} from "./server-connection";
 
 let debug = Debug("mf:model/SessionState");
 // let error = Debug("mf:model/SessionState:error");
 
+const DEFAULT_LEFT_BAR_WIDTH = 150;
+const DEFAULT_INPUT_PANEL_HEIGHT = 350;
+
 export class SessionState extends EventEmitter {
+    public get id() { return this._id; }
+    public uri: string;
+    public connectionOptions: IServerConnectionOptions;
     public connection: ServerConnection;
     public input: AceAjax.IEditSession;
     public output: AceAjax.IEditSession;
-    public leftBarWidth: number;
-    public inputHeight: number;
-    public tab: ServerConnectionTab;
+    public leftBarWidth: number = DEFAULT_LEFT_BAR_WIDTH;
+    public inputPanelHeight: number = DEFAULT_INPUT_PANEL_HEIGHT;
     public newOutput = false;
     public collectionList: any;
-
+    public modal: "connection" = null;
+    
+    private _id: number;
     private _start: moment.Moment;
+    
+    constructor(id: number) {
+        super();
+        this._id = id;
+        this.input = ace.createEditSession(`// insert and find some documents
+var test = db.collection("test");
+
+test.insert({ a: 1 });
+test.insert({ a: 2 });
+test.insert({ a: 3, b: "one" });
+test.insert({ a: 4, b: "two" });
+test.insert({ a: 5, c: new Date() });
+test.insert({ a: 1 });
+
+test.find({})
+    .sort({ a: 1, b: 1 })
+    .toArray();`, "ace/mode/javascript");
+        this.output = ace.createEditSession("", "ace/mode/javascript");
+    }
 
     public connect() {
-        this.connection = new ServerConnection(this.tab.uri);
+        this.connection = new ServerConnection(this.uri, this.connectionOptions);
         this.connection.on("rawInput", (input: any) => this.in(input));
         this.connection.on("rawOutput", (output: any) => this.out(output));
         this.connection.on("rawError", (err: any) => this.err(err));
         this.connection.connect()
-            .then(() => this.appendOutput("// CONNECTED: " + this.tab.uri + "\n"))
+            .then(() => this.appendOutput("// CONNECTED: " + this.uri + "\n"))
             .then(() => this.connection.ping())
             .then(() => this.connection.getCollections())
             .then(collList => this.collectionList = collList)

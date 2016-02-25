@@ -18,6 +18,6 @@ import {Component/*, Input, ViewChild, ElementRef, ViewEncapsulation, AfterViewI
     templateUrl: "component/modal/connection-modal/connection-modal.html",
 })
 
-export class ServerConnection {
+export class ConnectionModal {
 
 }

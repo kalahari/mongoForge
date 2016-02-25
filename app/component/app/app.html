@@ -1,15 +1,15 @@
 <div class="top-bar" #topBar>
     <top-nav (connect)="connectToServer($event, false)"
         (connectOptions)="connectToServer($event, true)"></top-nav>
-    <tabs #tabs (tabSelected)="setCurrentTab($event)"></tabs>
+    <tabs #tabs (tabSelected)="tabSelected($event)"></tabs>
 </div>
 <div class="work-area" [style.top]="topBarHeight">
     <div *ngIf="hello">
         <p>This useless tab will close on first connection.</p>
     </div>
     <div *ngIf="!hello" [ngSwitch]="modal">
-        <connection-modal *ngSwitchWhen="'connection''" [state]="state"></connection-modal> 
-        <server-connection *ngSwitchDefault [tab]="tab" [state]="state" (modal)="modal = $event"></server-connection>
+        <connection-modal *ngSwitchWhen="'connection'" [sessionState]="sessionState"></connection-modal> 
+        <server-connection *ngSwitchDefault [sessionState]="sessionState"></server-connection>
     </div>
 </div>
 <div class="bottom-bar">
