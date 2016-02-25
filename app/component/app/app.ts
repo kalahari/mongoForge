@@ -2,12 +2,12 @@
 
 import * as Debug from "debug";
 import * as util from "util";
-import {Component, ViewChild, ElementRef, AfterViewInit} from "angular2/core";
+import {Component, Input, ViewChild, ElementRef, AfterViewInit} from "angular2/core";
 import {Tabs, ITab} from "../tabs/tabs";
 import {TopNav} from "../top-nav/top-nav";
 import {WorkArea} from "../work-area/work-area";
 import {StatusBar} from "../status-bar/status-bar";
-import {ConnectionTab} from "../../data/connection";
+import {ServerConnectionTab} from "../../service/server-connection";
 
 let debug = Debug("mf:component/app/App");
 let error = Debug("mf:component/app/App:error");
@@ -58,34 +58,9 @@ export class App implements AfterViewInit {
 
     public connectToServer(uri: string, showOptions: boolean) {
         debug("connectToServer(uri: %s)", uri);
-        let tab = new ConnectionTab();
+        let tab = new ServerConnectionTab();
         tab.uri = uri;
-        this.tabs.addTab(tab, showOptions);
+        this.tabs.addTab(tab);
         setImmediate(() => this.resize());
-    }
-
-    @Input() public tab: ITab;
-    public modal: "connection" = null;
-    public hello: boolean = true;
-
-    public state = new WorkspaceState();
-
-    public tabSelected() {
-        debug("tabSelected()");
-        if (this.tab && this.tab.type === TabType.connection) {
-            this.hello = false;
-        } else {
-            this.hello = true;
-        }
-    }
-
-    public ngOnChanges(changes: { [propName: string]: SimpleChange }) {
-        debug("ngOnChanges(chages: %s)", changes);
-        // FIXME: need an interface for changes
-        /* tslint:disable:no-string-literal */
-        if (changes["tab"]) {
-        /* tslint:enable:no-string-literal */
-            this.tabSelected();
-        }
     }
 }
