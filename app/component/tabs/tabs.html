@@ -1,5 +1,5 @@
 <ul class="nav nav-tabs vcontent">
     <li *ngFor="#tab of tabs"
         (click)="selectTab(tab)"
-        [class.active]="tab.id === activeTab">{{tab.title}}</li>
+        [class.active]="tab.id === activeTabId">{{tab.title}}</li>
 </ul>

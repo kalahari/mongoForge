@@ -47,6 +47,7 @@ declare module MongoDb {
     }
 
     export class Admin {
+        public authenticate(username: string, password: string): Promise<any>;
         public listDatabases(callback: (err: Error, result: IResultListDatabases) => void): void;
         public listDatabases(): Promise<IResultListDatabases>;
     }
@@ -81,8 +82,10 @@ declare module MongoDb {
         public logout(callback?: (err: Error, result: any) => void): void;
         public logout(options: any, callback?: (err: Error, result: any) => void): void;
 
-        public authenticate(userName: string, password: string, callback?: (err: Error, result: any) => void): void;
-        public authenticate(userName: string, password: string, options: any, callback?: (err: Error, result: any) => void): void;
+        public authenticate(userName: string, password: string, callback: (err: Error, result: any) => void): void;
+        public authenticate(userName: string, password: string, options: any, callback: (err: Error, result: any) => void): void;
+        public authenticate(userName: string, password: string): Promise<any>;
+        public authenticate(userName: string, password: string, options: any): Promise<any>;
 
         public addUser(username: string, password: string, callback?: (err: Error, result: any) => void): void;
         public addUser(username: string, password: string, options: any, callback?: (err: Error, result: any) => void): void;

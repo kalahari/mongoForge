@@ -24,6 +24,7 @@ export class Tabs {
     public selectTab(tab: Tab) {
         if(this.activeTabId !== tab.id) {
             this.tabSelected.emit(tab);
+            this.activeTabId = tab.id;
         }
     }
 
@@ -32,9 +33,13 @@ export class Tabs {
             this.removeTab(Tab.HelloTab());
         }
         this.tabs.push(tab);
+        this.activeTabId = tab.id;
     }
 
     public removeTab(tab: Tab) {
-        this.tabs.splice(this.tabs.indexOf(tab), 1);
+        let [ removed ] = this.tabs.splice(this.tabs.indexOf(tab), 1);
+        if(removed && removed.id === this.activeTabId && this.tabs.length > 0) {
+            this.activeTabId = this.tabs[0].id;
+        }
     }
 }

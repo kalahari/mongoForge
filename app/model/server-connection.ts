@@ -4,6 +4,7 @@ import * as Debug from "debug";
 import * as util from "util";
 import {EventEmitter} from "events";
 import {MongoClient} from "mongodb";
+
 import {DatabaseList, Database} from "../model/database-list";
 
 const debug = Debug("mf:model/ServerConnection");
@@ -20,9 +21,19 @@ export class ServerConnection extends EventEmitter {
 
     public connect() {
         debug("connecting to: %o with options: %o", this.uri, this.options);
-        return this.client.connect(this.uri, this.options || {})
+        return this.client.connect(this.uri)
             .then(db => {
                 this.connected = true;
+                if(this.options && this.options.username != null && this.options.password != null) {
+                    if(this.options.admin) {
+                        return db.admin()
+                            .authenticate(this.options.username, this.options.password)
+                            .then(() => db);
+                    }
+                    return db
+                        .authenticate(this.options.username, this.options.password)
+                        .then(() => db);
+                }
                 return db;
             })
             .then(db => this.currentDb = this.connectDb = db)
@@ -79,5 +90,6 @@ export class ServerConnection extends EventEmitter {
 export class ServerConnectionOptions {
     username: string;
     password: string;
+    admin: boolean = false;
     database: string;
 }
