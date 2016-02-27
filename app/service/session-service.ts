@@ -1,12 +1,11 @@
 "use strict";
 
 import {Injectable} from "angular2/core";
-import {EventEmitter} from "events";
 import {SessionState} from "../model/session-state"
 import {HELLO_TAB_ID} from "../model/tab"
 
 @Injectable()
-export class SessionService extends EventEmitter {
+export class SessionService {
     private static sessions: SessionState[] = [];
     
     public getSession(id: number) {

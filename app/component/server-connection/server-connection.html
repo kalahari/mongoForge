@@ -13,7 +13,7 @@
             <resize-bar [vertical]="true" (delta)="resizeInput($event)" (complete)="editorsResized()"></resize-bar>
         </div>
         <div class="controls" #controls [style.top]="controlsTop">
-            <button type="button" (click)="state.currentConnection.runInput()">Run!</button>
+            <button type="button" (click)="sessionState.runInput()">Run!</button>
         </div>
         <div class="output-pane" [style.top]="outputPaneTop">
             <div id="output-editor" class="editor" #outputEditor></div>

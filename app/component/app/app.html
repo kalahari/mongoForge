@@ -7,9 +7,9 @@
     <div *ngIf="hello">
         <p>This useless tab will close on first connection.</p>
     </div>
-    <div *ngIf="!hello" [ngSwitch]="modal">
-        <connection-modal *ngSwitchWhen="'connection'" [sessionState]="sessionState"></connection-modal> 
-        <server-connection *ngSwitchDefault [sessionState]="sessionState"></server-connection>
+    <div *ngIf="!hello" [ngSwitch]="currentSession.modal">
+        <connection-modal *ngSwitchWhen="'connection'" [sessionState]="currentSession"></connection-modal> 
+        <server-connection *ngSwitchDefault [sessionState]="currentSession"></server-connection>
     </div>
 </div>
 <div class="bottom-bar">

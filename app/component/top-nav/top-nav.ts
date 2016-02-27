@@ -1,10 +1,6 @@
 "use strict";
 
-import * as Debug from "debug";
 import {Component, Output, /*ViewEncapsulation,*/ EventEmitter} from "angular2/core";
-
-let debug = Debug("mf:component/top-nav/TopNav");
-// let error = Debug("mf:component/top-nav/TopNav:error");
 
 @Component({
     // encapsulation: ViewEncapsulation.Native,
@@ -26,9 +22,7 @@ export class TopNav {
     }
 
     public onSubmit() {
-        debug("onSubmit()");
         this.submitting = true;
-        debug("submitting: " + this.uri);
         if (this.opts) {
             this.connectOptions.emit(this.uri);
             this.opts = false;

@@ -12,8 +12,7 @@ import {ServerConnection} from "../server-connection/server-connection";
 import {SessionState} from "../../model/session-state";
 import {SessionService} from "../../service/session-service";
 
-let debug = Debug("mf:component/app/App");
-let error = Debug("mf:component/app/App:error");
+const debug = Debug("mf:component/app/App");
 
 @Component({
     directives: [Tabs, TopNav, StatusBar, ConnectionModal, ServerConnection],
@@ -34,19 +33,17 @@ export class App implements AfterViewInit {
         return !this.currentSession;
     }
 
-    constructor(private sessionService: SessionService) {
-        debug("constructor()");
-    }
+    constructor(private sessionService: SessionService) { }
 
     public resize() {
-        debug("resize()");
         if (!this.topBar || !this.topBar.nativeElement) {
-            error("Nothig found for topBar: " + util.inspect(this.topBar));
+            // throw new Error("Nothig found for topBar: " + util.inspect(this.topBar));
+            console.error("Nothig found for topBar: " + util.inspect(this.topBar));
             return;
         }
         let newHeight = this.topBar.nativeElement.clientHeight + "px";
-        debug("app.resize newHeight: %s, topBarHeight: %s",
-            newHeight, this.topBarHeight);
+        // debug("app.resize newHeight: %s, topBarHeight: %s",
+        //     newHeight, this.topBarHeight);
         if (this.topBarHeight !== newHeight) {
             // setImmediate prevents mutate after check exception
             setImmediate(() => this.topBarHeight = newHeight);
@@ -54,18 +51,19 @@ export class App implements AfterViewInit {
     }
 
     public ngAfterViewInit() {
-        debug("ngAfterViewInit()");
         this.resize();
     }
 
     public connectToServer(uri: string, showOptions: boolean) {
-        debug("connectToServer(uri: %s)", uri);
         let tab = new Tab(uri);
         this.tabs.addTab(tab);
         this.tabs.selectTab(tab);
         this.currentSession = this.sessionService.getSession(tab.id);
+        this.currentSession.uri = uri;
         if(showOptions) {
             this.currentSession.modal = "connection";
+        } else {
+            this.currentSession.connect();
         }
         setImmediate(() => this.resize());
     }

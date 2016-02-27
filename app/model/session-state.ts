@@ -4,10 +4,9 @@ import * as Debug from "debug";
 import * as util from "util";
 import * as moment from "moment";
 import {EventEmitter} from "events";
-import {ServerConnection, IServerConnectionOptions} from "./server-connection";
+import {ServerConnection, ServerConnectionOptions} from "./server-connection";
 
-let debug = Debug("mf:model/SessionState");
-// let error = Debug("mf:model/SessionState:error");
+const debug = Debug("mf:model/SessionState");
 
 const DEFAULT_LEFT_BAR_WIDTH = 150;
 const DEFAULT_INPUT_PANEL_HEIGHT = 350;
@@ -15,7 +14,7 @@ const DEFAULT_INPUT_PANEL_HEIGHT = 350;
 export class SessionState extends EventEmitter {
     public get id() { return this._id; }
     public uri: string;
-    public connectionOptions: IServerConnectionOptions;
+    public connectionOptions: ServerConnectionOptions;
     public connection: ServerConnection;
     public input: AceAjax.IEditSession;
     public output: AceAjax.IEditSession;
@@ -70,7 +69,6 @@ test.find({})
     }
 
     public runInput() {
-        debug("runInput()");
         let inputSelection = this.input.getSelection();
         if (inputSelection.isEmpty()) {
             return this.runCommand(this.input.getValue());
@@ -79,14 +77,12 @@ test.find({})
     }
 
     public runCommand(command: string) {
-        debug("runCommand(command: %s)", command);
         // console.log("Running command: " + command);
         return this.execCommand(command, /^\s*\{/.test(command))
             .catch(e => this.err(e));
     }
 
     public execCommand(command: string, isCmdObj: boolean) {
-        debug("ngOnChanges(command: %s, isCmdObj: %s)", command, isCmdObj);
         if (!isCmdObj) {
             this.in(command);
         }

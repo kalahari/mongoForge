@@ -1,11 +1,7 @@
 "use strict";
 
-import * as Debug from "debug";
 import * as util from "util";
 import {Component, Input, Output, /*ViewEncapsulation,*/ EventEmitter} from "angular2/core";
-
-let debug = Debug("mf:component/resize-bar/ResizeBar");
-let error = Debug("mf:component/resize-bar/ResizeBar:error");
 
 export interface IResizeDelta {
     x: number;
@@ -34,7 +30,6 @@ export class ResizeBar {
     public mouseUpListener: EventListener = evt => this.mouseUp(<MouseEvent>evt);
 
     get resizeClass() {
-        debug("get resizeClass()");
         if (this.horizontal && this.vertical) {
             return "resize-both";
         } else if (this.horizontal) {
@@ -47,13 +42,12 @@ export class ResizeBar {
     }
 
     public mouseDown(event: MouseEvent) {
-        debug("mouseDown(event: %s)", event);
         if (!this.horizontal && !this.vertical) {
-            debug("Nohting to do, both directions disabled");
+            // Nohting to do, both directions disabled
+            return;
         }
         if (this.acting) {
-            error("Got mouseDown when already active!: " + util.inspect(event));
-            return;
+            throw new Error("Got mouseDown when already active!: " + util.inspect(event));
         }
         this.acting = true;
         this.startX = this.lastX = event.screenX;
@@ -64,19 +58,15 @@ export class ResizeBar {
     }
 
     public mouseMove(event: MouseEvent) {
-        debug("mouseMove(event: %s)", event);
         if (!this.acting) {
-            error("Got mouseMove when not active!: " + util.inspect(event));
-            return;
+            throw new Error("Got mouseMove when not active!: " + util.inspect(event));
         }
         this.dispatchDelta(event);
     }
 
     public mouseUp(event: MouseEvent) {
-        debug("mouseUp(event: %s)", event);
         if (!this.acting) {
-            error("Got mouseUp when not active!: " + util.inspect(event));
-            return;
+            throw new Error("Got mouseUp when not active!: " + util.inspect(event));
         }
         this.dispatchDelta(event);
         window.removeEventListener("mousemove", this.mouseMoveListener);
@@ -86,7 +76,6 @@ export class ResizeBar {
     }
 
     private dispatchDelta(event: MouseEvent) {
-        debug("dispatchDelta(event: %s)", event);
         let delta = {
             x: event.screenX - this.lastX,
             y: event.screenY - this.lastY,

@@ -1,25 +1,30 @@
 "use strict";
-/// <reference="../../typings/tsd.d.ts" />
-/// <reference="../../local_typings/mongodb.d.ts" />
 
-// import * as util from "util";
+import * as Debug from "debug";
+import * as util from "util";
 import {EventEmitter} from "events";
 import {MongoClient} from "mongodb";
 import {DatabaseList, Database} from "../model/database-list";
 
+const debug = Debug("mf:model/ServerConnection");
+
 export class ServerConnection extends EventEmitter {
-    public client: MongoClient;
+    public client = new MongoClient();
     public connectDb: MongoDb.Db;
     public currentDb: MongoDb.Db;
+    private connected = false;
 
-    constructor(public uri: string, public options: IServerConnectionOptions = null) {
+    constructor(public uri: string, public options: ServerConnectionOptions = null) {
         super();
-        this.client = new MongoClient();
     }
 
     public connect() {
-        // console.log("connecting to: " + this.uri);
+        debug("connecting to: %o with options: %o", this.uri, this.options);
         return this.client.connect(this.uri, this.options || {})
+            .then(db => {
+                this.connected = true;
+                return db;
+            })
             .then(db => this.currentDb = this.connectDb = db)
             .catch(e => this.emit("rawError", e));
     }
@@ -29,7 +34,8 @@ export class ServerConnection extends EventEmitter {
     }
 
     public getCollections() {
-        return this.connectDb.admin().listDatabases()
+        return this.checkConnection()
+            .then(() => this.connectDb.admin().listDatabases())
             .then(r => {
                 let ret = Promise.all(r.databases.map((dbInfo: Database) => {
                     return this.connectDb
@@ -52,16 +58,25 @@ export class ServerConnection extends EventEmitter {
     }
 
     public runCommand(cmd: Object) {
+        debug("running command: %o", cmd);
         this.emit("rawInput", cmd);
-        return this.connectDb.command(cmd)
+        return this.checkConnection()
+            .then(() => this.connectDb.command(cmd))
             .then(r => {
                 this.emit("rawOutput", r);
                 return r;
             });
     }
+    
+    private checkConnection() {
+        if(!this.connected) {
+            return Promise.reject(new Error("Connecion not established"));
+        }
+        return Promise.resolve();
+    }
 }
 
-export interface IServerConnectionOptions {
+export class ServerConnectionOptions {
     username: string;
     password: string;
     database: string;

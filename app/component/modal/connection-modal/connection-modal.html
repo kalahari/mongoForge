@@ -1,3 +1,10 @@
-<div>
-foobar
+<div class="outer">
+    <div class="inner">
+        <form role="document" (ngSubmit)="onSubmit()" #connectOptionsForm="ngForm">
+            <div><label>Username: <input type="text" [(ngModel)]="options.username"></label></div>
+            <div><label>Password: <input type="password" [(ngModel)]="options.password"></label></div>
+            <div><label>Database: <input type="text" [(ngModel)]="options.database"></label></div>
+            <div><button type="submit">Connect</button></div>
+        </form>
+    </div>
 </div>

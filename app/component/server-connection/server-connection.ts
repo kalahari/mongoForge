@@ -1,6 +1,5 @@
 "use strict";
 
-import * as Debug from "debug";
 import * as util from "util";
 import "moment-duration-format";
 import {Component, Input, ViewChild, ElementRef, OnChanges, SimpleChange, AfterViewInit} from "angular2/core";
@@ -8,9 +7,6 @@ import {ResizeBar, IResizeDelta} from "../resize-bar/resize-bar";
 import {CollectionList} from "../collection-list/collection-list";
 import {SessionState} from "../../model/session-state";
 // import "ace-builds/src-noconflict/ace";
-
-let debug = Debug("mf:component/server-connection/ServerConnection");
-let error = Debug("mf:component/server-connection/ServerConnection:error");
 
 const MIN_LEFT_BAR_WIDTH = 25;
 const MIN_INPUT_HEIGHT = 40;
@@ -37,52 +33,52 @@ export class ServerConnection implements AfterViewInit, OnChanges {
     private _resizeLeftBarWidth = 5;
     private _resizeInputPaneHeight = 5;
     private _controlsHeight = 20;
-
-    get leftBarWidth() {
-        debug("leftBarWidth()");
-        return this.sessionState.leftBarWidth + "px";
+    
+    private get _leftBarWidth() {
+        return (this.sessionState ? this.sessionState.leftBarWidth : MIN_LEFT_BAR_WIDTH);
     }
-    get rightPanelLeft() {
-        debug("rightPanelLeft()");
-        return (this.sessionState.leftBarWidth + this._resizeLeftBarWidth) + "px";
-    }
-    get inputPaneHeight() {
-        debug("inputPaneHeight()");
-        return this.sessionState.inputPanelHeight + "px";
-    }
-    get controlsTop() {
-        debug("controlsTop()");
-        return (this.sessionState.inputPanelHeight + this._resizeInputPaneHeight) + "px";
-    }
-    get outputPaneTop() {
-        debug("outputPaneTop()");
-        return (this.sessionState.inputPanelHeight + this._resizeInputPaneHeight + this._controlsHeight) + "px";
+    private get _inputPaneHeight() {
+        return (this.sessionState ? this.sessionState.inputPanelHeight : MIN_INPUT_HEIGHT);
     }
 
-    get collectionList() {
-        debug("collectionList()");
-        return this.sessionState.collectionList;
+    public get leftBarWidth() {
+        return this._leftBarWidth + "px";
+    }
+    public get rightPanelLeft() {
+        return (this._leftBarWidth + this._resizeLeftBarWidth) + "px";
+    }
+    public get inputPaneHeight() {
+        return this._inputPaneHeight + "px";
+    }
+    public get controlsTop() {
+        return (this._inputPaneHeight + this._resizeInputPaneHeight) + "px";
+    }
+    public get outputPaneTop() {
+        return (this._inputPaneHeight + this._resizeInputPaneHeight + this._controlsHeight) + "px";
+    }
+
+    public get collectionList() {
+        return this.sessionState ? this.sessionState.collectionList : null;
     }
 
     private newOutputListener = () => this.scrollOutputToBottom();
 
     private _editorsInited = false;
 
-    // constructor() {
-    //     debug("constructor");
-    // }
-    
     public ngOnChanges(changes: { [propName: string]: SimpleChange }) {
+        // console.log("changes: " + util.inspect(changes, false, 9));
         var sessionChanges = changes["sessionState"];
         if(sessionChanges) {
             let oldSession: SessionState = sessionChanges.previousValue;
-            if(oldSession) {
+            if(oldSession && oldSession instanceof SessionState) {
                 oldSession.removeListener("newOutput", this.newOutputListener);
             }
-            this.sessionState.addListener("newOutput", this.newOutputListener);
-            if (this._editorsInited) {
-                this.setEditorSessions();
-                setImmediate(() => this.editorsResized());
+            if(this.sessionState && this.sessionState instanceof SessionState) {
+                this.sessionState.addListener("newOutput", this.newOutputListener);
+                if (this._editorsInited) {
+                    this.setEditorSessions();
+                    setImmediate(() => this.editorsResized());
+                }
             }
         }
     }
@@ -102,15 +98,13 @@ export class ServerConnection implements AfterViewInit, OnChanges {
     }
 
     public resize() {
-        debug("resize()");
         if (!this.controls || !this.controls.nativeElement) {
             let message = "Nothig found for controls: " + util.inspect(this.controls);
-            error(message);
             return Promise.reject(new Error(message));
         }
         let newHeight = this.controls.nativeElement.clientHeight;
-        debug("resize newHeight: %s, _controlsHeight: %s",
-            newHeight, this._controlsHeight);
+        // debug("resize newHeight: %s, _controlsHeight: %s",
+        //     newHeight, this._controlsHeight);
         if (this._controlsHeight !== newHeight) {
             return new Promise<void>((resolve, reject) => {
                 // setImmediate prevents mutate after check exception
@@ -142,7 +136,6 @@ export class ServerConnection implements AfterViewInit, OnChanges {
     }
 
     public resizeLeftBar(delta: IResizeDelta) {
-        debug("resizeLeftBar(delta: %s)", delta);
         this.sessionState.leftBarWidth += delta.x;
         if (this.sessionState.leftBarWidth < MIN_LEFT_BAR_WIDTH) {
             this.sessionState.leftBarWidth = MIN_LEFT_BAR_WIDTH;
@@ -150,7 +143,6 @@ export class ServerConnection implements AfterViewInit, OnChanges {
     }
 
     public resizeInput(delta: IResizeDelta) {
-        debug("resizeInput(delta: %s)", delta);
         this.sessionState.inputPanelHeight += delta.y;
         if (this.sessionState.inputPanelHeight < MIN_INPUT_HEIGHT) {
             this.sessionState.inputPanelHeight = MIN_INPUT_HEIGHT;

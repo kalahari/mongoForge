@@ -1,13 +1,10 @@
 "use strict";
 
-// import * as Debug from "debug";
 // import * as util from "util";
 import "moment-duration-format";
-import {Component/*, Input, ViewChild, ElementRef, ViewEncapsulation, AfterViewInit*/} from "angular2/core";
-// import "ace-builds/src-noconflict/ace";
-
-// let debug = Debug("mf:component/connection-modal/ConnectionModal");
-// let error = Debug("mf:component/connection-modal/ConnectionModal:error");
+import {Component, Input/*, ViewChild, ElementRef, ViewEncapsulation, AfterViewInit*/} from "angular2/core";
+import {ServerConnectionOptions} from "../../../model/server-connection";
+import {SessionState} from "../../../model/session-state";
 
 @Component({
     // directives: [ResizeBar, CollectionList],
@@ -19,5 +16,12 @@ import {Component/*, Input, ViewChild, ElementRef, ViewEncapsulation, AfterViewI
 })
 
 export class ConnectionModal {
-
+    options = new ServerConnectionOptions();
+    @Input() public sessionState: SessionState;
+    
+    public onSubmit() {
+        this.sessionState.connectionOptions = this.options;
+        this.sessionState.modal = null;
+        this.sessionState.connect();
+    }
 }
