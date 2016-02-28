@@ -22,21 +22,17 @@ export class ServerConnection extends EventEmitter {
     public connect() {
         debug("connecting to: %o with options: %o", this.uri, this.options);
         return this.client.connect(this.uri)
+            .then(db => this.currentDb = this.connectDb = db)
             .then(db => {
                 this.connected = true;
                 if(this.options && this.options.username != null && this.options.password != null) {
-                    if(this.options.admin) {
-                        return db.admin()
-                            .authenticate(this.options.username, this.options.password)
-                            .then(() => db);
-                    }
-                    return db
-                        .authenticate(this.options.username, this.options.password)
-                        .then(() => db);
+                    return Promise.resolve(this.options.admin ? db.admin() : db)
+                        .then(auth => auth.authenticate(this.options.username, this.options.password))
+                        .then(() => this.runCommand({ connectionStatus : 1 }))
+                        .then(() => db)
                 }
                 return db;
             })
-            .then(db => this.currentDb = this.connectDb = db)
             .catch(e => this.emit("rawError", e));
     }
 

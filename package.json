@@ -1,15 +1,16 @@
 {
     "name": "mongo-forge",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "MongoDB Admin Client GUI",
     "scripts": {
         "clean": "rimraf node_modules typings",
+        "hack": "echo 'var window = undefined;' > ./node_modules/bson/lib/bson/binary.js.new && cat ./node_modules/bson/lib/bson/binary.js >> ./node_modules/bson/lib/bson/binary.js.new && mv -f ./node_modules/bson/lib/bson/binary.js.new ./node_modules/bson/lib/bson/binary.js",
         "lint": "tsc --listFiles --noEmit | grep '^app/' | xargs tslint",
         "package": "npm run package-linux",
         "package-darwin": "electron-packager ./ mongoForge --platform=darwin --arch=x64",
         "package-linux": "electron-packager ./ mongoForge --platform=linux --arch=x64",
         "package-windows": "electron-packager ./ mongoForge --platform=win32 --arch=x64",
-        "prepublish": "npm run typings && npm run transpile",
+        "prepublish": "npm run hack && npm run typings && npm run transpile",
         "reinstall": "npm run clean && npm install",
         "start": "electron app",
         "test": "npm run lint",
