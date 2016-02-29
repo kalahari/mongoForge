@@ -8,6 +8,13 @@ MongoDB Admin Client GUI/CLI for Mac/Windows/Linux
 
 Commmand syntax is from the [MongoDB Node.js Driver](http://mongodb.github.io/node-mongodb-native/2.1/getting-started/quick-tour/#inserting-a-document), `db` will already be defined for you.
 
+# Data Visualizer
+Result data can be displayed in table form:
+![Results to Table](/doc/mongoForge-table-result.png?raw=true "Results to Table")
+
+And you can switch back and forth with text view:
+![Results to Text](/doc/mongoForge-text-result.png?raw=true "Results to Text")
+
 # Run
  * Install [Node.js](https://nodejs.org/)
  * Clone the repo
