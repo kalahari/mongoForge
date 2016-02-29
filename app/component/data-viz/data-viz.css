@@ -1,13 +1,24 @@
 div.record {
     display: inline-block;
     vertical-align: top;
-    padding: 2px;
-    border: 1px solid #999;
+    margin-right: .25em;
+}
+
+div.record:last-child {
+    margin-right: 0em;
 }
 
 div.value {
-    padding: .25em;
     vertical-align: top;
+    padding: .25em;
+}
+
+div.value div.value {
+    border: 1px solid #999;
+}
+
+div.value div.record {
+    margin-top: .25em;
 }
 
 div.value.null {

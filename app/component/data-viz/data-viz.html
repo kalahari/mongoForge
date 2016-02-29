@@ -6,11 +6,11 @@
     <div *ngSwitchWhen="'ObjectID'" class="value">{{model.toHexString()}}</div>
     <div *ngSwitchWhen="'Date'" class="value">{{model.toISOString()}}</div>
     <div *ngSwitchWhen="'empty object'" class="value empty">{}</div>
-    <div *ngSwitchWhen="'object'">
+    <div *ngSwitchWhen="'object'" class="value">
         <div class="record" *ngFor="#key of keys">
             <div class="key">{{key}}</div>
             <data-viz [model]="model[key]"></data-viz>
         </div>
     </div>
-    <div class="value default" *ngSwitchDefault>{{ rawText }}</div>
+    <div *ngSwitchDefault class="value default">{{ rawText }}</div>
 </div>
