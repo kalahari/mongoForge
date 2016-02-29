@@ -63,3 +63,20 @@
     left: 0em;
     right: 0em;
 }
+
+.work-panel {
+    position: absolute;
+    top: 0em;
+    right: 0em;
+    left: 0em;
+    bottom: 1.5em;
+}
+
+.bottom-bar {
+    position: absolute;
+    bottom: 0em;
+    right: 0em;
+    left: 0em;
+    height: 1.5em;
+    overflow: hidden;
+}

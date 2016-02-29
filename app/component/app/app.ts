@@ -6,7 +6,6 @@ import {Component, Input, ViewChild, ElementRef, AfterViewInit, Inject} from "an
 import {Tabs} from "../tabs/tabs";
 import {Tab} from "../../model/tab";
 import {TopNav} from "../top-nav/top-nav";
-import {StatusBar} from "../status-bar/status-bar";
 import {ConnectionModal} from "../modal/connection-modal/connection-modal";
 import {ServerConnection} from "../server-connection/server-connection";
 import {SessionState} from "../../model/session-state";
@@ -15,7 +14,7 @@ import {SessionService} from "../../service/session-service";
 const debug = Debug("mf:component/app/App");
 
 @Component({
-    directives: [Tabs, TopNav, StatusBar, ConnectionModal, ServerConnection],
+    directives: [Tabs, TopNav, ConnectionModal, ServerConnection],
     // encapsulation: ViewEncapsulation.Native,
     // moduleId: module.id,
     selector: "app",

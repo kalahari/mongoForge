@@ -1,4 +1,6 @@
-html, body, .viewport {
+html,
+body,
+.viewport {
     width: 100%;
     height: 100%;
     margin: 0;
@@ -6,6 +8,7 @@ html, body, .viewport {
     overflow: hidden;
     color: #ccc;
     background-color: #222;
+    font-family:'Roboto';
 }
 
 input {
@@ -25,7 +28,7 @@ input:focus {
 button {
     border: none;
     background: transparent;
-    color: #777;
+    color: #9b5;
     height: 2em;
     margin-top: 0;
     margin-bottom: 0;
@@ -60,3 +63,137 @@ button:hover.neg {
 /*::-webkit-scrollbar-corner {
     background: rgba(0, 0, 0, 0.3);
 }*/
+
+
+
+* {
+    box-sizing:border-box;
+}
+
+
+/* material form input */
+/* basic stylings ------------------------------------------ */
+form.material .container { 
+    width:600px; 
+    margin:30px auto 0; 
+    display:block; 
+    background:#FFF;
+    padding:10px 50px 50px;
+}
+
+/* form starting stylings ------------------------------- */
+form.material .group { 
+    position:relative; 
+    margin-bottom:45px; 
+}
+form.material input {
+    font-size:18px;
+    padding:10px 10px 10px 5px;
+    display:block;
+    width:300px;
+    border:none;
+    border-bottom:1px solid #757575;
+}
+form.material input:focus {
+    outline:none;
+}
+
+/* LABEL ======================================= */
+form.material label 				 {
+    color:#999; 
+    font-size:18px;
+    font-weight:normal;
+    position:absolute;
+    pointer-events:none;
+    left:5px;
+    top:10px;
+    transition:0.2s ease all; 
+    -moz-transition:0.2s ease all; 
+    -webkit-transition:0.2s ease all;
+}
+
+/* active state */
+form.material input:focus ~ label,
+form.material input:valid ~ label {
+    top:-20px;
+    font-size:14px;
+    color:#5264AE;
+}
+
+/* BOTTOM BARS ================================= */
+form.material .bar {
+    position:relative;
+    display:block;
+    width:300px;
+}
+form.material .bar:before,
+form.material .bar:after {
+    content:'';
+    height:2px; 
+    width:0;
+    bottom:1px; 
+    position:absolute;
+    background:#5264AE; 
+    transition:0.2s ease all; 
+    -moz-transition:0.2s ease all; 
+    -webkit-transition:0.2s ease all;
+}
+form.material .bar:before {
+    left:50%;
+}
+form.material .bar:after {
+    right:50%; 
+}
+
+/* active state */
+form.material input:focus ~ .bar:before,
+form.material input:focus ~ .bar:after {
+    width:50%;
+}
+
+/* HIGHLIGHTER ================================== */
+form.material .highlight {
+    position:absolute;
+    height:60%; 
+    width:100px; 
+    top:25%; 
+    left:0;
+    pointer-events:none;
+    opacity:0.5;
+}
+
+/* active state */
+form.material input:focus ~ .highlight {
+    -webkit-animation:inputHighlighter 0.3s ease;
+    -moz-animation:inputHighlighter 0.3s ease;
+    animation:inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+    from {
+        background:#5264AE;
+    }
+    to {
+        width:0;
+        background:transparent;
+    }
+}
+@-moz-keyframes inputHighlighter {
+    from {
+        background:#5264AE;
+    }
+    to {
+        width:0;
+        background:transparent;
+    }
+}
+@keyframes inputHighlighter {
+    from {
+        background:#5264AE;
+    }
+    to {
+        width:0;
+        background:transparent;
+    }
+}

@@ -1,10 +1,24 @@
 <div class="outer">
     <div class="inner">
-        <form role="document" (ngSubmit)="onSubmit()" #connectOptionsForm="ngForm">
-            <div><label>Username: <input type="text" [(ngModel)]="options.username"></label></div>
-            <div><label>Password: <input type="password" [(ngModel)]="options.password"></label></div>
-            <div><label>Admin: <input type="checkbox" [(ngModel)]="options.admin"></label></div>
-            <!-- div *ngIf="!options.admin"><label>Database: <input type="text" [(ngModel)]="options.database"></label></div -->
+        <form class="material" role="document" (ngSubmit)="onSubmit()" #connectOptionsForm="ngForm">
+            <div class="group">      
+                <input type="text" [(ngModel)]="options.username" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Username</label>
+            </div>
+            <div class="group">      
+                <input type="password" [(ngModel)]="options.password" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Password</label>
+            </div>
+            <div class="group">      
+                <input type="checkbox" [(ngModel)]="options.admin">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Admin</label>
+            </div>
             <div><button type="submit">Connect</button></div>
         </form>
     </div>

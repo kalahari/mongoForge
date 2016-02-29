@@ -5,6 +5,7 @@ import "moment-duration-format";
 import {Component, Input, ViewChild, ElementRef, OnChanges, SimpleChange, AfterViewInit} from "angular2/core";
 import {ResizeBar, IResizeDelta} from "../resize-bar/resize-bar";
 import {CollectionList} from "../collection-list/collection-list";
+import {StatusBar} from "../status-bar/status-bar";
 import {SessionState} from "../../model/session-state";
 // import "ace-builds/src-noconflict/ace";
 
@@ -12,7 +13,7 @@ const MIN_LEFT_BAR_WIDTH = 25;
 const MIN_INPUT_HEIGHT = 40;
 
 @Component({
-    directives: [ResizeBar, CollectionList],
+    directives: [ResizeBar, CollectionList, StatusBar],
     // encapsulation: ViewEncapsulation.Native,
     // moduleId: module.id,
     selector: "server-connection",
@@ -120,19 +121,21 @@ export class ServerConnection implements AfterViewInit, OnChanges {
     public ngAfterViewInit() {
         this.resize()
             .then(() => {
-                // console.log(util.inspect(ace));
-                this.inputEditor = ace.edit(this.inputEditorElement.nativeElement);
-                this.inputEditor.setTheme("ace/theme/cobalt");
-                // this.inputEditor.getSession().setMode("ace/mode/javascript");
-                this.outputEditor = ace.edit(this.outputEditorElement.nativeElement);
-                this.outputEditor.setTheme("ace/theme/cobalt");
+                this.inputEditor = this.setupEditor(this.inputEditorElement);
+                this.outputEditor = this.setupEditor(this.outputEditorElement);
                 this.outputEditor.setReadOnly(true);
-                // this.outputEditor.getSession().setMode("ace/mode/javascript");
                 this._editorsInited = true;
                 if (this.sessionState) {
                     this.setEditorSessions();
                 }
             });
+    }
+    
+    private setupEditor(element: ElementRef) {
+        // console.log(util.inspect(ace));
+        let editor = ace.edit(element.nativeElement);
+        editor.setTheme("ace/theme/cobalt");
+        return editor;
     }
 
     public resizeLeftBar(delta: IResizeDelta) {

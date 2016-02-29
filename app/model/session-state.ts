@@ -3,7 +3,9 @@
 import * as Debug from "debug";
 import * as util from "util";
 import * as moment from "moment";
+import * as url from "url";
 import {EventEmitter} from "events";
+import {Cursor} from "mongodb";
 import {ServerConnection, ServerConnectionOptions} from "./server-connection";
 
 const debug = Debug("mf:model/SessionState");
@@ -23,10 +25,17 @@ export class SessionState extends EventEmitter {
     public newOutput = false;
     public collectionList: any;
     public modal: "connection" = null;
-    
+
+    public get hostName() {
+        if (!this.uri) {
+            return null;
+        }
+        return url.parse(this.uri, false, true).host;
+    }
+
     private _id: number;
     private _start: moment.Moment;
-    
+
     constructor(id: number) {
         super();
         this._id = id;
@@ -41,9 +50,10 @@ test.insert({ a: 5, c: new Date() });
 test.insert({ a: 1 });
 
 test.find({})
-    .sort({ a: 1, b: 1 })
-    .toArray();`, "ace/mode/javascript");
+    .sort({ a: 1, b: 1 });`, "ace/mode/javascript");
+        this.input.setUseWorker(false);
         this.output = ace.createEditSession("", "ace/mode/javascript");
+        this.output.setUseWorker(false);
     }
 
     public connect() {
@@ -59,11 +69,21 @@ test.find({})
             .catch(e => this.err(e));
     }
 
-    public appendOutput(text: string) {
+    private outputBuffer = "";
+
+    public bufferOutput(text: string) {
+        if (text != null) {
+            this.outputBuffer += text;
+        }
+    }
+
+    public appendOutput(text: string = null) {
+        this.bufferOutput(text);
         this.output.insert({
             column: 0,
             row: this.output.getLength(),
-        }, text);
+        }, this.outputBuffer);
+        this.outputBuffer = "";
         this.newOutput = true;
         this.emit("newOutput");
     }
@@ -83,6 +103,7 @@ test.find({})
     }
 
     public execCommand(command: string, isCmdObj: boolean) {
+        debug("execCommand(command: %o, isCmdObj: %o)", command, isCmdObj);
         if (!isCmdObj) {
             this.in(command);
         }
@@ -114,38 +135,51 @@ test.find({})
     }
 
     public in(cmd: any) {
-        this.appendOutput("\n// " + this.stringify(cmd, true));
-        this._start = moment();
-        return cmd;
+        this.bufferOutput("\n// ");
+        this.stringify(cmd, true)
+            .then(v => this.bufferOutput(v))
+            .then(() => this.appendOutput())
+            .then(() => this._start = moment())
+            .then(() => cmd);
     }
 
     public out(val: any) {
         return Promise.resolve(val)
-            .then(v => {
-                this.appendOutput(this.stringify(v) +
-                    "// " + moment.duration(moment().diff(this._start)).format("hh:mm:ss", 3) + "\n");
-                return v;
-            });
+            .then(v => this.stringify(v))
+            .then(v => this.bufferOutput(v))
+            .then(() => this.bufferOutput("// " + moment.duration(moment().diff(this._start)).format("hh:mm:ss", 3) + "\n"))
+            .then(() => this.appendOutput())
+            .then(() => val);
     }
 
     public err(val: any) {
-        this.appendOutput("\n// ERROR:\n" + this.stringify(val));
-        return val;
+        this.bufferOutput("\n// ERROR:\n");
+        this.stringify(val)
+            .then(v => this.bufferOutput(v))
+            .then(() => this.appendOutput())
+            .then(() => val);
     }
 
     private stringify(val: any, comment: boolean = false) {
-        let strVal = "";
+        let strP: Promise<string> = null;
         if (typeof val === "string") {
-            strVal = val;
+            strP = Promise.resolve(val);
         } else {
-            strVal = util.inspect(val, { depth: 9 });
+            if (val instanceof Cursor) {
+                val = val.toArray();
+            }
+            strP = Promise.resolve(val)
+                .then(v => util.inspect(v, { depth: 9 }));
         }
         if (comment) {
-            strVal = strVal.split("\n").join("\n// ");
+            strP = strP.then(v => v.split("\n").join("\n// "));
         }
-        if (!/\n\s*$/.test(strVal)) {
-            strVal += "\n";
-        }
-        return strVal;
+        strP = strP.then(v => {
+            if (!/\n\s*$/.test(v)) {
+                v += "\n";
+            }
+            return v;
+        });
+        return strP;
     }
 }

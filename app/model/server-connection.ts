@@ -68,7 +68,7 @@ export class ServerConnection extends EventEmitter {
         debug("running command: %o", cmd);
         this.emit("rawInput", cmd);
         return this.checkConnection()
-            .then(() => this.connectDb.command(cmd))
+            .then(() => this.currentDb.command(cmd))
             .then(r => {
                 this.emit("rawOutput", r);
                 return r;

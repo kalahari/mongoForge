@@ -2,6 +2,7 @@
 MongoDB Admin Client GUI/CLI for Mac/Windows/Linux
 
 [![Build Status](https://travis-ci.org/kalahari/mongoForge.svg?branch=master)](https://travis-ci.org/kalahari/mongoForge)
+[![Gitter](https://badges.gitter.im/kalahari/mongoForge.svg)](https://gitter.im/kalahari/mongoForge?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 *Current release is extremely raw, you have been warned.*
 

@@ -1,6 +1,7 @@
 "use strict";
 
-import {Component/*, ViewEncapsulation*/} from "angular2/core";
+import {Component, Input} from "angular2/core";
+import {SessionState} from "../../model/session-state";
 
 @Component({
     // encapsulation: ViewEncapsulation.Native,
@@ -10,5 +11,5 @@ import {Component/*, ViewEncapsulation*/} from "angular2/core";
 })
 
 export class StatusBar {
-
+    @Input() public sessionState: SessionState;
 }

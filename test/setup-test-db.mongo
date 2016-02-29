@@ -1,0 +1,27 @@
+use admin
+
+db.createUser(
+  {
+    user: "admin",
+    pwd: "abc123",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+  }
+)
+
+db.auth("admin", "abc123" )
+
+db.createUser(
+  {
+    user: "foobar",
+    pwd: "f00bar",
+    roles: [ { role: "readWriteAnyDatabase", db: "admin" } ]
+  }
+)
+
+db.auth("foobar", "f00bar" )
+
+use foobar
+
+for(var i = 0; i < 128; i++) db.test.insert({ foo: i })
+
+db.test.createIndex("foo")

@@ -9,16 +9,7 @@
 .work-area {
     position: absolute;
     top: 3em;
-    bottom: 2em;
-    left: 0em;
-    right: 0em;
-}
-
-.bottom-bar {
-    position: absolute;
     bottom: 0em;
-    right: 0em;
     left: 0em;
-    height: 1.5em;
-    overflow: hidden;
+    right: 0em;
 }
