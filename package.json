@@ -1,7 +1,7 @@
 {
     "name": "mongo-forge",
-    "version": "0.3.0",
-    "description": "MongoDB Admin Client GUI",
+    "version": "0.4.0",
+    "description": "MongoDB Admin Client GUI/CLI",
     "scripts": {
         "clean": "rimraf node_modules typings",
         "hack": "echo 'var window = undefined;' > ./node_modules/bson/lib/bson/binary.js.new && cat ./node_modules/bson/lib/bson/binary.js >> ./node_modules/bson/lib/bson/binary.js.new && mv -f ./node_modules/bson/lib/bson/binary.js.new ./node_modules/bson/lib/bson/binary.js",
