@@ -25,6 +25,7 @@ export class SessionState extends EventEmitter {
     public newOutput = false;
     public collectionList: any;
     public modal: "connection" = null;
+    public viz = false;
 
     public get hostName() {
         if (!this.uri) {
@@ -32,9 +33,13 @@ export class SessionState extends EventEmitter {
         }
         return url.parse(this.uri, false, true).host;
     }
+    public get result() {
+        return this._result;
+    }
 
     private _id: number;
     private _start: moment.Moment;
+    private _result: any = null;
 
     constructor(id: number) {
         super();
@@ -144,7 +149,8 @@ test.find({})
     }
 
     public out(val: any) {
-        return Promise.resolve(val)
+        return this.resolve(val)
+            .then(v => this._result = v)
             .then(v => this.stringify(v))
             .then(v => this.bufferOutput(v))
             .then(() => this.bufferOutput("// " + moment.duration(moment().diff(this._start)).format("hh:mm:ss", 3) + "\n"))
@@ -160,26 +166,20 @@ test.find({})
             .then(() => val);
     }
 
+    private resolve(val: any) {
+        return Promise.resolve(val)
+            .then(v => v instanceof Cursor ? v.toArray() : v);
+    }
+
     private stringify(val: any, comment: boolean = false) {
-        let strP: Promise<string> = null;
-        if (typeof val === "string") {
-            strP = Promise.resolve(val);
-        } else {
-            if (val instanceof Cursor) {
-                val = val.toArray();
-            }
-            strP = Promise.resolve(val)
-                .then(v => util.inspect(v, { depth: 9 }));
-        }
-        if (comment) {
-            strP = strP.then(v => v.split("\n").join("\n// "));
-        }
-        strP = strP.then(v => {
-            if (!/\n\s*$/.test(v)) {
-                v += "\n";
-            }
-            return v;
-        });
-        return strP;
+        return this.resolve(val)
+            .then(v => (typeof v === "string") ? <string>v : util.inspect(v, { depth: 9 }))
+            .then(v => comment ? v.split("\n").join("\n// ") : v)
+            .then(v => {
+                if (!/\n\s*$/.test(v)) {
+                    v += "\n";
+                }
+                return v;
+            });
     }
 }

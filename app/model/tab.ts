@@ -1,6 +1,8 @@
 export enum TabType {
     hello = 1,
     connection,
+    textResult,
+    tableResult,
 }
 
 export const HELLO_TAB_ID = 1;

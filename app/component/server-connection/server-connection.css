@@ -44,8 +44,7 @@
     position: absolute;
     left: 0em;
     right: 0em;
-    padding: .5em;
-    /*background-color: #ffffff;*/
+    background-color: #444;
 }
 
 .output-pane {
@@ -54,6 +53,7 @@
     left: 0em;
     right: 0em;
     /*background-color: #ff00ff;*/
+    overflow: auto;
 }
 
 .editor {

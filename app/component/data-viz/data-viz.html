@@ -1,0 +1,16 @@
+<div [ngSwitch]="type">
+    <div *ngSwitchWhen="'null'" class="value null">null</div>
+    <div *ngSwitchWhen="'undefined'" class="value undefined">undefined</div>
+    <div *ngSwitchWhen="'string'" class="value">"{{model}}"</div>
+    <div *ngSwitchWhen="'number'" class="value">{{model}}</div>
+    <div *ngSwitchWhen="'ObjectID'" class="value">{{model.toHexString()}}</div>
+    <div *ngSwitchWhen="'Date'" class="value">{{model.toISOString()}}</div>
+    <div *ngSwitchWhen="'empty object'" class="value empty">{}</div>
+    <div *ngSwitchWhen="'object'">
+        <div class="record" *ngFor="#key of keys">
+            <div class="key">{{key}}</div>
+            <data-viz [model]="model[key]"></data-viz>
+        </div>
+    </div>
+    <div class="value default" *ngSwitchDefault>{{ rawText }}</div>
+</div>

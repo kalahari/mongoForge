@@ -6,6 +6,9 @@ import {Component, Input, ViewChild, ElementRef, OnChanges, SimpleChange, AfterV
 import {ResizeBar, IResizeDelta} from "../resize-bar/resize-bar";
 import {CollectionList} from "../collection-list/collection-list";
 import {StatusBar} from "../status-bar/status-bar";
+import {DataViz} from "../data-viz/data-viz";
+import {Tabs} from "../tabs/tabs";
+import {Tab, TabType} from "../../model/tab";
 import {SessionState} from "../../model/session-state";
 // import "ace-builds/src-noconflict/ace";
 
@@ -13,7 +16,7 @@ const MIN_LEFT_BAR_WIDTH = 25;
 const MIN_INPUT_HEIGHT = 40;
 
 @Component({
-    directives: [ResizeBar, CollectionList, StatusBar],
+    directives: [ResizeBar, CollectionList, StatusBar, DataViz, Tabs],
     // encapsulation: ViewEncapsulation.Native,
     // moduleId: module.id,
     selector: "server-connection",
@@ -25,7 +28,8 @@ export class ServerConnection implements AfterViewInit, OnChanges {
     @ViewChild("controls") public controls: ElementRef;
     @ViewChild("inputEditor") public inputEditorElement: ElementRef;
     @ViewChild("outputEditor") public outputEditorElement: ElementRef;
-
+    @ViewChild("tabs") public tabs: Tabs;
+    
     @Input() public sessionState: SessionState;
 
     public inputEditor: AceAjax.Editor;
@@ -128,6 +132,11 @@ export class ServerConnection implements AfterViewInit, OnChanges {
                 if (this.sessionState) {
                     this.setEditorSessions();
                 }
+                let textTab = new Tab("Text", TabType.textResult);
+                this.tabs.addTab(textTab);
+                let tableTab = new Tab("Table", TabType.tableResult);
+                this.tabs.addTab(tableTab);
+                this.tabs.selectTab(textTab);
             });
     }
     
@@ -149,6 +158,18 @@ export class ServerConnection implements AfterViewInit, OnChanges {
         this.sessionState.inputPanelHeight += delta.y;
         if (this.sessionState.inputPanelHeight < MIN_INPUT_HEIGHT) {
             this.sessionState.inputPanelHeight = MIN_INPUT_HEIGHT;
+        }
+    }
+    
+    public tabSelected(tab: Tab) {
+        switch(tab.type) {
+            case TabType.textResult:
+                this.sessionState.viz = false;
+                this.setEditorSessions();
+                break;
+            case TabType.tableResult:
+                this.sessionState.viz = true;
+                break;
         }
     }
 }

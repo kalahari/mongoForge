@@ -13,10 +13,12 @@
             <resize-bar [vertical]="true" (delta)="resizeInput($event)" (complete)="editorsResized()"></resize-bar>
         </div>
         <div class="controls" #controls [style.top]="controlsTop">
-            <button type="button" (click)="sessionState.runInput()">Run!</button>
+            <button type="button" (click)="sessionState.runInput()">Run</button>
+            <tabs #tabs (tabSelected)="tabSelected($event)"></tabs>
         </div>
         <div class="output-pane" [style.top]="outputPaneTop">
-            <div id="output-editor" class="editor" #outputEditor></div>
+            <div [hidden]="sessionState.viz" id="output-editor" class="editor" #outputEditor></div>
+            <data-viz *ngIf="sessionState.viz" [model]="sessionState.result"></data-viz>
         </div>
     </div>
 </div>

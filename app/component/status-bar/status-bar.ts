@@ -12,4 +12,12 @@ import {SessionState} from "../../model/session-state";
 
 export class StatusBar {
     @Input() public sessionState: SessionState;
+
+    public get userName() {
+        return this.sessionState && this.sessionState.connectionOptions && this.sessionState.connectionOptions.username;
+    }
+
+    public get hostName() {
+        return this.sessionState && this.sessionState.hostName;
+    }
 }
