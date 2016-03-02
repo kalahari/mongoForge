@@ -3,14 +3,54 @@
 import "source-map-support/register";
 import * as util from "util";
 import { app, BrowserWindow, ipcMain } from "electron";
+import { ObjectID } from "mongodb";
+import { Persistence } from "./service/persistence";
 
-let windows: GitHubElectron.BrowserWindow[] = [];
+interface IWindowState {
+    width: number,
+    height: number,
+    maximized: boolean,
+    x?: number,
+    y?: number,
+}
 
-let openWindow = (uri: string, options: GitHubElectron.BrowserWindowOptions) => {
-    let window = new BrowserWindow(options);
-    windows.push(window);
+const persist = new Persistence();
+let window: GitHubElectron.BrowserWindow = null;
+
+let openWindow = (uri: string) => {
+    let lastWindowState: IWindowState = persist.get("lastWindowState");
+    if (lastWindowState === null) {
+        lastWindowState = {
+            width: 1200,
+            height: 900,
+            maximized: false 
+        };
+    }
+    window = new BrowserWindow({
+        x: lastWindowState.x,
+        y: lastWindowState.y,
+        width: lastWindowState.width, 
+        height: lastWindowState.height,
+    });
+    if (lastWindowState.maximized) {
+        window.maximize();
+    }
     window.loadURL("file://" + __dirname + uri);
-    window.on("closed", () => windows.splice(windows.indexOf(window)));
+    window.on('close', () => {
+        let maximized = window.isMaximized();
+        if(maximized) {
+            window.unmaximize();
+        }
+        let bounds = window.getBounds(); 
+        persist.set("lastWindowState", {
+            x: bounds.x,
+            y: bounds.y,
+            width: bounds.width,
+            height: bounds.height,
+            maximized: maximized,
+        });
+        window = null;
+    });
 };
 
 app.on("window-all-closed", () => {
@@ -34,7 +74,5 @@ app.on("ready", () => {
         console.error("[Browser ERROR] " + msg, ...args);
     });
 
-    openWindow("/index.html", { height: 900, width: 1200 });
-
-    // openWindow("/test.html", { width: 1200, height: 900 });
+    openWindow("/index.html");
 });
