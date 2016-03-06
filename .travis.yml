@@ -1,6 +1,13 @@
 language: node_js
 node_js:
   - "node"
+env:
+  - npm_config_disturl=https://atom.io/download/atom-shell
+  - npm_config_target=0.36.8
+  - npm_config_arch=x64
+  - npm_config_runtime=electron
+  # don't think this is needed here with clean install every time
+  # - HOME=~/.electron-gyp
 require: sudo
 before_install:
   - sudo apt-get -qq update
