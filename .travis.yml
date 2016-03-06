@@ -7,6 +7,7 @@ require: sudo
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libkrb5-dev
+install: HOME=~/.electron-gyp npm install
 notifications:
   webhooks:
     urls:
