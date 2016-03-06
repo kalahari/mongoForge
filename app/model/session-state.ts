@@ -41,6 +41,8 @@ export class SessionState extends EventEmitter {
     private _start: moment.Moment;
     private _result: any = null;
 
+    private outputBuffer = "";
+
     constructor(id: number) {
         super();
         this._id = id;
@@ -73,8 +75,6 @@ test.find({})
             .then(collList => this.collectionList = collList)
             .catch(e => this.err(e));
     }
-
-    private outputBuffer = "";
 
     public bufferOutput(text: string) {
         if (text != null) {

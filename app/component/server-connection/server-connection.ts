@@ -29,7 +29,7 @@ export class ServerConnection implements AfterViewInit, OnChanges {
     @ViewChild("inputEditor") public inputEditorElement: ElementRef;
     @ViewChild("outputEditor") public outputEditorElement: ElementRef;
     @ViewChild("tabs") public tabs: Tabs;
-    
+
     @Input() public sessionState: SessionState;
 
     public inputEditor: AceAjax.Editor;
@@ -38,7 +38,9 @@ export class ServerConnection implements AfterViewInit, OnChanges {
     private _resizeLeftBarWidth = 5;
     private _resizeInputPaneHeight = 5;
     private _controlsHeight = 20;
-    
+
+    private _editorsInited = false;
+
     private get _leftBarWidth() {
         return (this.sessionState ? this.sessionState.leftBarWidth : MIN_LEFT_BAR_WIDTH);
     }
@@ -66,19 +68,17 @@ export class ServerConnection implements AfterViewInit, OnChanges {
         return this.sessionState ? this.sessionState.collectionList : null;
     }
 
-    private newOutputListener = () => this.scrollOutputToBottom();
-
-    private _editorsInited = false;
-
     public ngOnChanges(changes: { [propName: string]: SimpleChange }) {
         // console.log("changes: " + util.inspect(changes, false, 9));
-        var sessionChanges = changes["sessionState"];
-        if(sessionChanges) {
+        /* tslint:disable:no-string-literal */
+        let sessionChanges = changes["sessionState"];
+        /* tslint:enable:no-string-literal */
+        if (sessionChanges) {
             let oldSession: SessionState = sessionChanges.previousValue;
-            if(oldSession && oldSession instanceof SessionState) {
+            if (oldSession && oldSession instanceof SessionState) {
                 oldSession.removeListener("newOutput", this.newOutputListener);
             }
-            if(this.sessionState && this.sessionState instanceof SessionState) {
+            if (this.sessionState && this.sessionState instanceof SessionState) {
                 this.sessionState.addListener("newOutput", this.newOutputListener);
                 if (this._editorsInited) {
                     this.setEditorSessions();
@@ -139,13 +139,6 @@ export class ServerConnection implements AfterViewInit, OnChanges {
                 this.tabs.selectTab(textTab);
             });
     }
-    
-    private setupEditor(element: ElementRef) {
-        // console.log(util.inspect(ace));
-        let editor = ace.edit(element.nativeElement);
-        editor.setTheme("ace/theme/cobalt");
-        return editor;
-    }
 
     public resizeLeftBar(delta: IResizeDelta) {
         this.sessionState.leftBarWidth += delta.x;
@@ -160,9 +153,9 @@ export class ServerConnection implements AfterViewInit, OnChanges {
             this.sessionState.inputPanelHeight = MIN_INPUT_HEIGHT;
         }
     }
-    
+
     public tabSelected(tab: Tab) {
-        switch(tab.type) {
+        switch (tab.type) {
             case TabType.textResult:
                 this.sessionState.viz = false;
                 this.setEditorSessions();
@@ -170,6 +163,17 @@ export class ServerConnection implements AfterViewInit, OnChanges {
             case TabType.tableResult:
                 this.sessionState.viz = true;
                 break;
+            default:
+                break;
         }
+    }
+
+    private newOutputListener = () => this.scrollOutputToBottom();
+
+    private setupEditor(element: ElementRef) {
+        // console.log(util.inspect(ace));
+        let editor = ace.edit(element.nativeElement);
+        editor.setTheme("ace/theme/cobalt");
+        return editor;
     }
 }

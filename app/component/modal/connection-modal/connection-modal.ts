@@ -16,9 +16,9 @@ import {SessionState} from "../../../model/session-state";
 })
 
 export class ConnectionModal {
-    options = new ServerConnectionOptions();
+    public options = new ServerConnectionOptions();
     @Input() public sessionState: SessionState;
-    
+
     public onSubmit() {
         this.sessionState.connectionOptions = this.options;
         this.sessionState.modal = null;

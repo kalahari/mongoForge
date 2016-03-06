@@ -16,5 +16,6 @@ export class CollectionList {
     @Input() public model: DatabaseList;
 
     public selectDb(db: Database) {
+        return;
     }
 }

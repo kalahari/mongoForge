@@ -1,34 +1,17 @@
 "use strict";
 
-import * as Debug from "debug";
+// import * as Debug from "debug";
 import { app } from "electron";
 import * as fs from "fs";
 import * as path from "path";
 // import {Injectable} from "angular2/core";
 
-const debug = Debug("mf:service/Persistence");
-const dataFilePath = path.join(app.getPath('userData'), 'data.json');
+// const debug = Debug("mf:service/Persistence");
+const dataFilePath = path.join(app.getPath("userData"), "data.json");
 
 // @Injectable()
 export class Persistence {
     private static data: { [key: string]: any } = null;
-
-    private load() {
-        if (Persistence.data !== null) {
-            return;
-        }
-
-        if (!fs.existsSync(dataFilePath)) {
-            Persistence.data = {};
-            return;
-        }
-
-        Persistence.data = JSON.parse(fs.readFileSync(dataFilePath, 'utf-8'));
-    }
-
-    private save() {
-        fs.writeFileSync(dataFilePath, JSON.stringify(Persistence.data));
-    }
 
     public set(key: string, value: any) {
         this.load();
@@ -38,7 +21,7 @@ export class Persistence {
 
     public get(key: string) {
         this.load();
-        var value: any = null;
+        let value: any = null;
         if (key in Persistence.data) {
             value = Persistence.data[key];
         }
@@ -51,5 +34,22 @@ export class Persistence {
             delete Persistence.data[key];
             this.save();
         }
+    }
+
+    private load() {
+        if (Persistence.data !== null) {
+            return;
+        }
+
+        if (!fs.existsSync(dataFilePath)) {
+            Persistence.data = {};
+            return;
+        }
+
+        Persistence.data = JSON.parse(fs.readFileSync(dataFilePath, "utf-8"));
+    }
+
+    private save() {
+        fs.writeFileSync(dataFilePath, JSON.stringify(Persistence.data));
     }
 }

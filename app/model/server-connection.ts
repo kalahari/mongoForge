@@ -25,7 +25,7 @@ export class ServerConnection extends EventEmitter {
             .then(db => this.currentDb = this.connectDb = db)
             .then(db => {
                 this.connected = true;
-                if (this.options && this.options.username != undefined && this.options.password != undefined) {
+                if (this.options && this.options.username != null && this.options.password != null) {
                     return Promise.resolve(this.options.admin ? db.admin() : db)
                         .then(auth => auth.authenticate(this.options.username, this.options.password))
                         .then(() => this.runCommand({ connectionStatus: 1 }))
@@ -52,7 +52,7 @@ export class ServerConnection extends EventEmitter {
                         // FIXME: need an interface for dbInfo
                         /* tslint:disable:no-string-literal */
                         .then(collInfo => dbInfo.collections = collInfo);
-                    /* tslint:enable:no-string-literal */
+                         /* tslint:enable:no-string-literal */
                 })).then(() => <DatabaseList>r);
                 this.emit("rawOutput", ret);
                 return ret;

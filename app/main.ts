@@ -18,7 +18,7 @@ let window: GitHubElectron.BrowserWindow = undefined;
 
 let openWindow = (uri: string) => {
     let lastWindowState: IWindowState = persist.get("lastWindowState");
-    if (lastWindowState == undefined) {
+    if (lastWindowState == null) {
         lastWindowState = {
             height: 900,
             maximized: false,

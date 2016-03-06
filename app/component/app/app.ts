@@ -1,8 +1,8 @@
 "use strict";
 
-import * as Debug from "debug";
+// import * as Debug from "debug";
 import * as util from "util";
-import {Component, Input, ViewChild, ElementRef, AfterViewInit, Inject} from "angular2/core";
+import {Component, ViewChild, ElementRef, AfterViewInit} from "angular2/core";
 import {Tabs} from "../tabs/tabs";
 import {Tab} from "../../model/tab";
 import {TopNav} from "../top-nav/top-nav";
@@ -11,16 +11,16 @@ import {ServerConnection} from "../server-connection/server-connection";
 import {SessionState} from "../../model/session-state";
 import {SessionService} from "../../service/session-service";
 
-const debug = Debug("mf:component/app/App");
+// const debug = Debug("mf:component/app/App");
 
 @Component({
     directives: [Tabs, TopNav, ConnectionModal, ServerConnection],
     // encapsulation: ViewEncapsulation.Native,
     // moduleId: module.id,
+    providers: [SessionService],
     selector: "app",
     styleUrls: ["component/app/app.css"],
     templateUrl: "component/app/app.html",
-    providers:[SessionService],
 })
 
 export class App implements AfterViewInit {
@@ -59,14 +59,14 @@ export class App implements AfterViewInit {
         this.tabs.selectTab(tab);
         this.currentSession = this.sessionService.getSession(tab.id);
         this.currentSession.uri = uri;
-        if(showOptions) {
+        if (showOptions) {
             this.currentSession.modal = "connection";
         } else {
             this.currentSession.connect();
         }
         setImmediate(() => this.resize());
     }
-    
+
     public tabSelected(tab: Tab) {
         this.currentSession = this.sessionService.getSession(tab.id);
     }

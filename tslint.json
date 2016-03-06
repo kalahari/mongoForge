@@ -6,9 +6,6 @@
             "statements"
         ],
         "ban": false,
-        "ban-keywords": [
-            "undefined"
-        ],
         "class-name": true,
         "comment-format": [
             true,
@@ -64,10 +61,6 @@
         "no-extra-boolean-cast": true,
         "no-extra-semi": true,
         "no-inferrable-types": false,
-        "no-inner-declarations": [
-            true,
-            "both"
-        ],
         "no-internal-module": true,
         "no-invalid-regexp": true,
         "no-irregular-whitespace": true,

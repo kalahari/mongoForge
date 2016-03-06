@@ -18,12 +18,12 @@ export class DataViz {
 
     public get type() {
         let type = typeof this.model;
-        if(type === "object") {
-            if(this.model instanceof ObjectID) {
+        if (type === "object") {
+            if (this.model instanceof ObjectID) {
                 return "ObjectID";
-            } else if(this.model instanceof Date) {
+            } else if (this.model instanceof Date) {
                 return "Date";
-            } else if(Object.keys(this.model).length < 1) {
+            } else if (Object.keys(this.model).length < 1) {
                 return "empty object";
             }
         }
@@ -33,7 +33,7 @@ export class DataViz {
     public get keys() {
         return Object.keys(this.model);
     }
-    
+
     public get rawText() {
         return util.inspect(this.model, false, 9);
     }
