@@ -6,6 +6,9 @@
             "statements"
         ],
         "ban": false,
+        "ban-keywords": [
+            "undefined"
+        ],
         "class-name": true,
         "comment-format": [
             true,
@@ -68,7 +71,7 @@
         "no-internal-module": true,
         "no-invalid-regexp": true,
         "no-irregular-whitespace": true,
-        "no-null-keyword": true,
+        "no-null-keyword": false,
         "no-regex-spaces": true,
         "no-require-imports": true,
         "no-shadowed-variable": true,
@@ -97,7 +100,9 @@
             "avoid-escape"
         ],
         "radix": true,
-        "semicolon": true,
+        "semicolon": [
+            "always"
+        ],
         "switch-default": true,
         "trailing-comma": [
             true,

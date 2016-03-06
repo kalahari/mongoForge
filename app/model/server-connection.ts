@@ -1,7 +1,7 @@
 "use strict";
 
 import * as Debug from "debug";
-import * as util from "util";
+// import * as util from "util";
 import {EventEmitter} from "events";
 import {MongoClient} from "mongodb";
 
@@ -15,7 +15,7 @@ export class ServerConnection extends EventEmitter {
     public currentDb: MongoDb.Db;
     private connected = false;
 
-    constructor(public uri: string, public options: ServerConnectionOptions = null) {
+    constructor(public uri: string, public options: ServerConnectionOptions = undefined) {
         super();
     }
 
@@ -25,11 +25,11 @@ export class ServerConnection extends EventEmitter {
             .then(db => this.currentDb = this.connectDb = db)
             .then(db => {
                 this.connected = true;
-                if(this.options && this.options.username != null && this.options.password != null) {
+                if (this.options && this.options.username != undefined && this.options.password != undefined) {
                     return Promise.resolve(this.options.admin ? db.admin() : db)
                         .then(auth => auth.authenticate(this.options.username, this.options.password))
-                        .then(() => this.runCommand({ connectionStatus : 1 }))
-                        .then(() => db)
+                        .then(() => this.runCommand({ connectionStatus: 1 }))
+                        .then(() => db);
                 }
                 return db;
             })
@@ -52,7 +52,7 @@ export class ServerConnection extends EventEmitter {
                         // FIXME: need an interface for dbInfo
                         /* tslint:disable:no-string-literal */
                         .then(collInfo => dbInfo.collections = collInfo);
-                        /* tslint:enable:no-string-literal */
+                    /* tslint:enable:no-string-literal */
                 })).then(() => <DatabaseList>r);
                 this.emit("rawOutput", ret);
                 return ret;
@@ -74,9 +74,9 @@ export class ServerConnection extends EventEmitter {
                 return r;
             });
     }
-    
+
     private checkConnection() {
-        if(!this.connected) {
+        if (!this.connected) {
             return Promise.reject(new Error("Connecion not established"));
         }
         return Promise.resolve();
@@ -84,8 +84,8 @@ export class ServerConnection extends EventEmitter {
 }
 
 export class ServerConnectionOptions {
-    username: string;
-    password: string;
-    admin: boolean = false;
-    database: string;
+    public username: string;
+    public password: string;
+    public admin: boolean = false;
+    public database: string;
 }

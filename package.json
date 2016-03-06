@@ -1,62 +1,63 @@
 {
-    "name": "mongo-forge",
-    "version": "0.4.0",
-    "description": "MongoDB Admin Client GUI/CLI",
-    "scripts": {
-        "clean": "rimraf node_modules typings",
-        "hack": "echo 'var window = undefined;' > ./node_modules/bson/lib/bson/binary.js.new && cat ./node_modules/bson/lib/bson/binary.js >> ./node_modules/bson/lib/bson/binary.js.new && mv -f ./node_modules/bson/lib/bson/binary.js.new ./node_modules/bson/lib/bson/binary.js",
-        "lint": "tsc --listFiles --noEmit | grep '^app/' | xargs tslint",
-        "package": "npm run package-linux",
-        "package-darwin": "electron-packager ./ mongoForge --platform=darwin --arch=x64",
-        "package-linux": "electron-packager ./ mongoForge --platform=linux --arch=x64",
-        "package-windows": "electron-packager ./ mongoForge --platform=win32 --arch=x64",
-        "prepublish": "npm run hack && npm run typings && npm run transpile",
-        "reinstall": "npm run clean && npm install",
-        "start": "electron app",
-        "test": "npm run lint",
-        "transpile": "tsc",
-        "typings": "typings install"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/kalahari/mongoForge.git"
-    },
-    "keywords": [
-        "mongodb",
-        "electron",
-        "angular2",
-        "typescript"
-    ],
-    "author": "Blake Mitchell <blake@barkingspoon.com>",
-    "license": "Apache-2.0",
-    "bugs": {
-        "url": "https://github.com/kalahari/mongoForge/issues"
-    },
-    "homepage": "https://github.com/kalahari/mongoForge#readme",
-    "devDependencies": {
-        "asar": "^0.10.0",
-        "electron-packager": "^5.2.1",
-        "electron-prebuilt": "^0.36.8",
-        "rimraf": "^2.5.2",
-        "tslint": "^3.4.0",
-        "tslint-eslint-rules": "^1.0.1",
-        "typescript": "^1.8.2",
-        "typings": "^0.6.8"
-    },
-    "dependencies": {
-        "ace-builds": "^1.2.2",
-        "angular2": "^2.0.0-beta.7",
-        "debug": "^2.2.0",
-        "es6-promise": "^3.1.2",
-        "es6-shim": "^0.33.13",
-        "kerberos": "0.0.18",
-        "moment": "^2.11.2",
-        "moment-duration-format": "^1.3.0",
-        "mongodb": "^2.1.7",
-        "reflect-metadata": "^0.1.2",
-        "rxjs": "^5.0.0-beta.2",
-        "source-map-support": "^0.4.0",
-        "winston": "^2.2.0",
-        "zone.js": "^0.5.15"
-    }
+  "name": "mongo-forge",
+  "version": "0.4.0",
+  "description": "MongoDB Admin Client GUI/CLI",
+  "scripts": {
+    "clean": "rimraf node_modules typings",
+    "hack": "echo 'var window = undefined;' > ./node_modules/bson/lib/bson/binary.js.new && cat ./node_modules/bson/lib/bson/binary.js >> ./node_modules/bson/lib/bson/binary.js.new && mv -f ./node_modules/bson/lib/bson/binary.js.new ./node_modules/bson/lib/bson/binary.js",
+    "lint": "tsc --listFiles --noEmit | grep -E '^('`pwd`'/)?app/' | xargs tslint",
+    "package": "npm run package-linux",
+    "package-darwin": "electron-packager ./ mongoForge --platform=darwin --arch=x64",
+    "package-linux": "electron-packager ./ mongoForge --platform=linux --arch=x64",
+    "package-windows": "electron-packager ./ mongoForge --platform=win32 --arch=x64",
+    "prepublish": "npm run hack && npm run typings && npm run transpile",
+    "reinstall": "npm run clean && npm install",
+    "start": "electron app",
+    "test": "npm run lint",
+    "transpile": "tsc",
+    "typings": "typings install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kalahari/mongoForge.git"
+  },
+  "keywords": [
+    "mongodb",
+    "electron",
+    "angular2",
+    "typescript"
+  ],
+  "author": "Blake Mitchell <blake@barkingspoon.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/kalahari/mongoForge/issues"
+  },
+  "homepage": "https://github.com/kalahari/mongoForge#readme",
+  "devDependencies": {
+    "asar": "^0.10.0",
+    "electron-packager": "^5.2.1",
+    "electron-prebuilt": "^0.36.8",
+    "rimraf": "^2.5.2",
+    "tslint": "^3.4.0",
+    "tslint-eslint-rules": "^1.0.1",
+    "typescript": "^1.8.7",
+    "typings": "^0.6.9"
+  },
+  "dependencies": {
+    "ace-builds": "^1.2.2",
+    "angular2": "^2.0.0-beta.8",
+    "bson": "^0.4.22",
+    "debug": "^2.2.0",
+    "es6-promise": "^3.1.2",
+    "es6-shim": "^0.33.13",
+    "kerberos": "0.0.18",
+    "moment": "^2.11.2",
+    "moment-duration-format": "^1.3.0",
+    "mongodb": "^2.1.7",
+    "reflect-metadata": "^0.1.2",
+    "rxjs": "^5.0.0-beta.2",
+    "source-map-support": "^0.4.0",
+    "winston": "^2.2.0",
+    "zone.js": "^0.5.15"
+  }
 }
