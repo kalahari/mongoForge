@@ -4,7 +4,7 @@
   "description": "mongoForge Development Environment",
   "scripts": {
     "clean": "rimraf node_modules typings app/node_modules app/typings",
-    "lint": "tsc --listFiles --noEmit | grep -E '^('`pwd`'/)?app/' | xargs tslint",
+    "lint": "tsc --listFiles --noEmit | grep -E '^('`pwd`'/)?app/' | grep -v node_modules | xargs tslint",
     "prepublish": "npm run typings && npm run transpile",
     "reinstall": "npm run clean && npm install",
     "transpile": "tsc",
@@ -13,7 +13,7 @@
     "build": "gulp build",
     "release": "gulp release --env=production",
     "start": "node ./tasks/start",
-    "test": "npm run lint && node ./tasks/start --env=test",
+    "test": "npm run lint",
     "install-native": "node ./tasks/install_native_module"
   },
   "repository": {

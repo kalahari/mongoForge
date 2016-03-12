@@ -1,8 +1,6 @@
 language: node_js
 node_js:
   - "node"
-env:
-  - npm_config_disturl=https://atom.io/download/atom-shell npm_config_target=0.36.10 npm_config_arch=x64 npm_config_runtime=electron
 require: sudo
 before_install:
   - sudo apt-get -qq update
@@ -10,11 +8,10 @@ before_install:
   # update the compiler for node-gyp
   - sudo apt-get install python-software-properties
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update
+  - sudo apt-get -qq update
   - sudo apt-get install gcc-5 g++-5
   - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 80 --slave /usr/bin/g++ g++ /usr/bin/g++-5
   - sudo update-alternatives --set gcc /usr/bin/gcc-5
-install: HOME=~/.electron-gyp npm install
 notifications:
   webhooks:
     urls:

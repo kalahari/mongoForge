@@ -12,3 +12,4 @@ build/
 # transpiled javascript
 tools/tslint/**/*.js
 tools/tslint/**/*.js.map
+releases
