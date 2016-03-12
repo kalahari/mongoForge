@@ -10,8 +10,10 @@
   },
   "exclude": [
     "node_modules",
+    "app/node_modules",
     "typings/browser.d.ts",
     "typings/browser",
-    "tools"
+    "tools",
+    "build"
   ]
 }

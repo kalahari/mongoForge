@@ -1,5 +1,30 @@
 {
-  "name": "mongo-forge-app",
+  "name": "mongo-forge",
+  "productName": "mongoForge",
   "version": "0.4.0",
-  "main": "main.js"
+  "description": "MongoDB Admin Client GUI/CLI",
+  "identifier": "com.barkingspoon.mongo-forge",
+  "author": "Blake Mitchell <blake@barkingspoon.com>",
+  "copyright": "© 2016, Blake Mitchell",
+  "main": "main.js",
+  "scripts": {
+    "postinstall": "node ../tasks/rebuild_native_modules"
+  },
+  "dependencies": {
+    "ace-builds": "^1.2.2",
+    "angular2": "^2.0.0-beta.9",
+    "bson": "^0.4.22",
+    "debug": "^2.2.0",
+    "es6-promise": "^3.1.2",
+    "es6-shim": "^0.33.13",
+    "kerberos": "0.0.19",
+    "moment": "^2.11.2",
+    "moment-duration-format": "^1.3.0",
+    "mongodb": "^2.1.7",
+    "reflect-metadata": "^0.1.2",
+    "rxjs": "^5.0.0-beta.2",
+    "source-map-support": "^0.4.0",
+    "winston": "^2.2.0",
+    "zone.js": "^0.5.15"
+  }
 }
