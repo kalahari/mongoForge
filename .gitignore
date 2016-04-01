@@ -1,16 +1,17 @@
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
-node_modules
+/node_modules/
+/app/node_modules/
 
 # tsd directory
-typings
+/typings/
 
-test/data/
+/test/data/
 
-build/
+/build/
 
 # transpiled javascript
-tools/tslint/**/*.js
-tools/tslint/**/*.js.map
-releases
+/tools/tslint/**/*.js
+/tools/tslint/**/*.js.map
+/releases/
 *.log
