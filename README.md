@@ -21,6 +21,9 @@ And you can switch back and forth with text view:
  * Install `npm install`
  * Run `npm start`
 
+# Credits
+Icon adapted from [Anvil by Jason Dilworth from the Noun Project](https://thenounproject.com/term/anvil/166414/)
+
 # License
 Copyright 2016 Blake Mitchell &lt;blake@barkingspoon.com&gt;
 
