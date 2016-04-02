@@ -1,7 +1,7 @@
 {
   "name": "mongo-forge",
   "productName": "mongoForge",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "MongoDB Admin Client GUI/CLI",
   "identifier": "com.barkingspoon.mongo-forge",
   "author": "Blake Mitchell <blake@barkingspoon.com>",

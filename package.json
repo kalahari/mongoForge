@@ -1,6 +1,6 @@
 {
   "name": "mongo-forge-dev",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "mongoForge Development Environment",
   "scripts": {
     "clean": "rimraf node_modules typings app/node_modules app/typings",
