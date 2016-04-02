@@ -1,4 +1,4 @@
-![mongoForge](./resources/osx/icon.iconset/icon_128x128.png?raw=true "mongoforge")
+![mongoForge](./resources/osx/icon.iconset/icon_256x256.png?raw=true "mongoforge")
 # mongoForge
 MongoDB Admin Client GUI/CLI for Mac/Windows/Linux
 
