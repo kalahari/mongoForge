@@ -1,3 +1,4 @@
+![mongoForge](/resources/icon.png?raw=true "mongoforge")
 # mongoForge
 MongoDB Admin Client GUI/CLI for Mac/Windows/Linux
 
