@@ -1,4 +1,4 @@
-![mongoForge](/resources/icon.png?raw=true "mongoforge")
+![mongoForge](./resources/osx/icon.iconset/icon_128x128.png?raw=true "mongoforge")
 # mongoForge
 MongoDB Admin Client GUI/CLI for Mac/Windows/Linux
 
@@ -9,12 +9,15 @@ MongoDB Admin Client GUI/CLI for Mac/Windows/Linux
 
 Commmand syntax is from the [MongoDB Node.js Driver](http://mongodb.github.io/node-mongodb-native/2.1/getting-started/quick-tour/#inserting-a-document), `db` will already be defined for you.
 
+# Installers
+Binary installers for Mac and Windows are available on the [latest release](../../releases/latest) page. Linux users should follow the "Run" instructions below for now.
+
 # Data Visualizer
 Result data can be displayed in table form:
-![Results to Table](/doc/mongoForge-table-result.png?raw=true "Results to Table")
+![Results to Table](./doc/mongoForge-table-result.png?raw=true "Results to Table")
 
 And you can switch back and forth with text view:
-![Results to Text](/doc/mongoForge-text-result.png?raw=true "Results to Text")
+![Results to Text](./doc/mongoForge-text-result.png?raw=true "Results to Text")
 
 # Run
  * Install [Node.js](https://nodejs.org/)
