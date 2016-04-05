@@ -16,7 +16,10 @@
    xml:space="preserve"
    id="svg2"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="icon_inkscape.svg"><metadata
+   sodipodi:docname="icon_inkscape.svg"
+   inkscape:export-filename="/Users/blake/Projects/mongoForge/resources/osx/icon.iconset/icon_16x16.png"
+   inkscape:export-xdpi="34.5564"
+   inkscape:export-ydpi="34.5564"><metadata
      id="metadata14"><rdf:RDF><cc:Work
          rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
@@ -34,10 +37,10 @@
      id="namedview10"
      showgrid="false"
      inkscape:zoom="15.104"
-     inkscape:cx="45.698559"
+     inkscape:cx="34.24464"
      inkscape:cy="33.767632"
      inkscape:window-x="385"
-     inkscape:window-y="81"
+     inkscape:window-y="104"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg2" /><text
      xml:space="preserve"
