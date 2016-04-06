@@ -26,7 +26,7 @@ And you can switch back and forth with text view:
  * Run `npm start`
 
 # Credits
-Icon adapted from [Anvil by Jason Dilworth from the Noun Project](https://thenounproject.com/term/anvil/166414/)
+Icon adapted from ["Blacksmith and tools" By Gerald_G](https://openclipart.org/detail/8390/blacksmith-and-tools)
 
 # License
 Copyright 2016 Blake Mitchell &lt;blake@barkingspoon.com&gt;
