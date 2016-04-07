@@ -12,11 +12,11 @@
   },
   "dependencies": {
     "ace-builds": "^1.2.2",
-    "angular2": "^2.0.0-beta.9",
+    "angular2": "^2.0.0-beta.13",
     "bson": "^0.4.22",
     "debug": "^2.2.0",
     "es6-promise": "^3.1.2",
-    "es6-shim": "^0.33.13",
+    "es6-shim": "^0.35.0",
     "kerberos": "0.0.19",
     "moment": "^2.11.2",
     "moment-duration-format": "^1.3.0",
@@ -25,6 +25,6 @@
     "rxjs": "^5.0.0-beta.2",
     "source-map-support": "^0.4.0",
     "winston": "^2.2.0",
-    "zone.js": "^0.5.15"
+    "zone.js": "^0.6.9"
   }
 }
